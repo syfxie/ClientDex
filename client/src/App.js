@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { useState } from "react";
+import { Routes, Route } from "react-router-dom";
 
-import routes from "./routes"
 import Navbar from './components/Navbar';
 import Mic from './components/Mic';
 import './App.css';
+import Home from "./pages/Home";
+import AddContact from "./pages/AddContact";
 
 function App() {
     const [data, setData] = useState("");
@@ -27,16 +28,10 @@ function App() {
             {/* <p>{data}</p> */}
             <div className="App">
                 <Navbar />
-                <Router>
                     <Routes>
-                        {routes.map((aRoute, aIndex) =>
-                            <Route key={aIndex}
-                                   path={aRoute.path}
-                                   element={aRoute.element}
-                            />
-                        )}
+                        <Route path="/" element={<Home/>}/>
+                        <Route path="add-contact" element={<AddContact />} />
                     </Routes>
-                </Router>
                 <Mic></Mic>
             </div>
         </div>
