@@ -9,7 +9,7 @@ function App() {
 
 	// Using useEffect for single rendering (example of how to get backend data)
     useEffect(() => {
-        fetch('http://localhost:5000/test', {
+        fetch('/test', {
             method : "GET"
         })
             .then(function (response) {

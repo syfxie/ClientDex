@@ -9,7 +9,6 @@ export default function Button({
                                    fontWeight='400',
                                    background = 'white',
                                    border = '#C3C0C0 3px solid',
-                                   hover,
                                    width='fit-content',
                                    height='fit-content',
                                    margin='5px',
