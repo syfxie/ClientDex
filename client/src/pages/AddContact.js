@@ -1,7 +1,131 @@
+import './AddContact.css';
+import { useState, useEffect } from 'react';
+
 function AddContact() {
+
+  // simplified version of contact for now
+  const [contact, setContact] = useState({
+    firstName: "",
+    lastName: "",
+    location: "",
+    emailAddress: "",
+    phoneNum: "",
+    company: "",
+    category: ""
+
+  });
+
+  const handleChange = (e) => {
+    setContact({ ...contact, [e.target.name]: e.target.value });
+  }
+
+  const categories = [
+    'Blacklisted', 'Current Client', 'Past Client', 'Urgent', 'Cold Call', 'Potential Client'
+  ]
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("submitted!")
+    console.log(contact)
+    try {
+      const response = await fetch('http://127.0.0.1:5000/add_contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(contact),
+      });
+
+      const data = await response.json();
+      console.log(data);
+
+      // set back to empty object
+      setContact({
+        firstName: "",
+        lastName: "",
+        location: "",
+        emailAddress: "",
+        phoneNum: "",
+        company: ""
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <div>
-      Add Contact
+      <p className="heading">Enter your prompt here...</p>
+      <div className="main-container">
+        <div className="form-container">
+        <form onSubmit={handleSubmit}>
+          <p className="add-contact">Add Contact</p>
+          {/* do the styling later */}
+          <div className="inputs">
+            <input
+            type="text"
+            placeholder="First name..."
+            name="firstName"
+            value={contact.firstName}
+            onChange={handleChange}
+            />
+            <input 
+            type="text" 
+            placeholder="Last name..."
+            name="lastName"
+            value={contact.lastName}
+            onChange={handleChange}
+            />
+            <input
+            type="text"
+            placeholder="Location.."
+            name="location"
+            value={contact.location}
+            onChange={handleChange}
+            />
+            <input
+            type="email"
+            placeholder="Email address"
+            name="emailAddress"
+            value={contact.emailAddress}
+            onChange={handleChange}
+            />
+            <input
+            type="tel"
+            placeholder="Phone Number"
+            name="phoneNum"
+            value={contact.phoneNum}
+            onChange={handleChange}
+            />
+            <input
+            type="text"
+            placeholder="Company"
+            name="company"
+            value={contact.company}
+            onChange={handleChange}
+            />
+  
+            <select
+            name="category"
+            value={contact.category}
+            onChange={handleChange}
+            >
+              {categories.map((category) => {
+                return (
+                  <option key={category} onChange={handleChange}>
+                   {category}
+                  </option>
+                );
+              })}
+            </select>
+
+          </div>
+          <button
+          type="submit"
+          >Submit</button>
+        </form>
+        </div>
+      </div>
     </div>
   );
 }

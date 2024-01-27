@@ -1,0 +1,28 @@
+.heading {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.add-contact {
+  color: white;
+  font-weight: bold;
+  font-size: 26px;
+}
+
+.main-container {
+  display: flex;
+  justify-content: center;
+}
+
+.form-container {
+  background-color: #00527A;
+  width: 1200px;
+  height: 560px;
+  border-radius: 25px;
+}
+
+.inputs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+}
