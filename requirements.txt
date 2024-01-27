@@ -1,20 +1,22 @@
-Brotli @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/brotli-split_1699237319520/work
-certifi @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/certifi_1701805090354/work/certifi
-cffi @ file:///private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_b4nang6w_y/croot/cffi_1700254307954/work
+Brotli @ file:///Users/runner/miniforge3/conda-bld/brotli-split_1695989934239/work
+certifi @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_35eq66o3mo/croot/certifi_1700501684871/work/certifi
+cffi @ file:///Users/runner/miniforge3/conda-bld/cffi_1696001836291/work
 charset-normalizer @ file:///tmp/build/80754af9/charset-normalizer_1630003229654/work
-click @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/click_1699237822453/work
-cryptography @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_b1p0q5vizk/croot/cryptography_1702070293829/work
-Flask @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/flask_1699241060066/work
-idna @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/idna_1699237644810/work
+click @ file:///home/conda/feedstock_root/build_artifacts/click_1692311806742/work
+cryptography @ file:///Users/runner/miniforge3/conda-bld/cryptography-split_1701563321459/work
+dnspython @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_ac52k4vqs2/croot/dnspython_1703096969321/work
+Flask @ file:///Users/cbousseau/work/recipes/ci_py311/flask_1677937489551/work
+idna @ file:///home/conda/feedstock_root/build_artifacts/idna_1701026962277/work
 itsdangerous @ file:///tmp/build/80754af9/itsdangerous_1621432558163/work
-Jinja2 @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/jinja2_1699239114434/work
-MarkupSafe @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/markupsafe_1699238356177/work
+Jinja2 @ file:///home/conda/feedstock_root/build_artifacts/jinja2_1704966972576/work
+MarkupSafe @ file:///Users/runner/miniforge3/conda-bld/markupsafe_1705779013687/work
 pycparser @ file:///tmp/build/80754af9/pycparser_1636541352034/work
-pyOpenSSL @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/pyopenssl_1699241567078/work
-PySocks @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/pysocks_1699237568675/work
-requests @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/requests_1699238126620/work
-setuptools==68.2.2
-urllib3 @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/urllib3_1699237745193/work
-Werkzeug @ file:///private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_94_079eho7/croot/werkzeug_1706210081645/work
-wheel==0.41.2
-flask~=2.2.2
+pymongo @ file:///Users/runner/miniforge3/conda-bld/pymongo_1701281522321/work
+pyOpenSSL @ file:///home/conda/feedstock_root/build_artifacts/pyopenssl_1698795453264/work
+PySocks @ file:///home/conda/feedstock_root/build_artifacts/pysocks_1661604839144/work
+requests @ file:///home/conda/feedstock_root/build_artifacts/requests_1684774241324/work
+urllib3 @ file:///home/conda/feedstock_root/build_artifacts/urllib3_1699933488691/work
+Werkzeug @ file:///home/conda/feedstock_root/build_artifacts/werkzeug_1698235201373/work
+
+flask~=2.2.5
+pymongo~=4.6.1
