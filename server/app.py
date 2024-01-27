@@ -17,13 +17,15 @@ def my_profile():
 
 @app.route('/add_contact', methods=['POST'])
 def create_contact():
-    data = request.get_json()
-    app.logger.info(data)
+    try:
+        data = request.get_json()
+        print(data)
 
-    # add to database
+        return jsonify({"message": "Contact added successfully"}), 200
 
-    response = {'message': 'Contact added successfully'}
-    return jsonify(response), 201
+    except Exception as e:
+        print(e)
+        return jsonify({"error": "An error occurred"}), 500
 
 
 # Index and filter contacts
@@ -95,3 +97,6 @@ def delete_contact():
         return jsonify(data), 200
     else:
         return jsonify({'error': 'Contact not found'}), 404
+
+if __name__ == "__main__":
+   app.run(port=5000, debug=True)
