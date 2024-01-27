@@ -1,6 +1,12 @@
 from flask import Flask, request, jsonify
+from pymongo import MongoClient
 
 app = Flask(__name__)
+
+client = MongoClient('localhost', 27017)
+
+db = client.flask_db
+contacts = db.contacts
 
 
 @app.route('/add_contact', methods=['POST'])
@@ -46,7 +52,7 @@ def show_contact():
         return jsonify({'error': 'Contact not found'}), 404
 
 
-@app.route('/update_contact', methods=['GET'])
+@app.route('/update_contact', methods=['PUT'])
 def update_contact():
     data = request.get_json()
 
@@ -63,6 +69,23 @@ def update_contact():
         keys = ['first_name', 'last_name', 'labels', 'company', 'location',
                 'email', 'phone_number', 'notes', 'last_contacted']
         data = dict(zip(keys, contact))
+        return jsonify(data), 200
+    else:
+        return jsonify({'error': 'Contact not found'}), 404
+
+
+@app.route('/delete', methods=['DELETE'])
+def delete_contact():
+    data = request.get_json()
+    contact_id = data['id']
+
+    if not (contact_id and len(contact_id) > 0):
+        return jsonify({'error': 'Invalid contact ID'}), 400
+
+    # remove from database
+    success = True
+
+    if success:
         return jsonify(data), 200
     else:
         return jsonify({'error': 'Contact not found'}), 404
