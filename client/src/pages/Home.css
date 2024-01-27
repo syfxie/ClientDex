@@ -1,0 +1,10 @@
+.list-container {
+    height: 300px;
+    overflow-scrolling: auto;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding:30px;
+    background-color: #00527A;
+}
