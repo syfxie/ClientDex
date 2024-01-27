@@ -11,8 +11,8 @@ function AddContact() {
     emailAddress: "",
     phoneNum: "",
     company: "",
-    category: ""
-
+    category: "",
+    notes: ""
   });
 
   const handleChange = (e) => {
@@ -46,7 +46,9 @@ function AddContact() {
         location: "",
         emailAddress: "",
         phoneNum: "",
-        company: ""
+        company: "",
+        category: "",
+        notes: ""
       })
     } catch (error) {
       console.log(error)
@@ -59,9 +61,16 @@ function AddContact() {
       <div className="main-container">
         <div className="form-container">
         <form onSubmit={handleSubmit}>
-          <p className="add-contact">Add Contact</p>
+          <div className="top-bar">
+            <p className="add-contact">Add Contact</p>
+            <button
+            type="submit"
+            className="submit-btn"
+            >Done
+            </button>
+          </div>
           {/* do the styling later */}
-          <div className="inputs">
+          <div className="fields-top">
             <input
             type="text"
             placeholder="First name..."
@@ -83,6 +92,8 @@ function AddContact() {
             value={contact.location}
             onChange={handleChange}
             />
+            </div>
+            <div className="fields-bottom">
             <input
             type="email"
             placeholder="Email address"
@@ -104,11 +115,10 @@ function AddContact() {
             value={contact.company}
             onChange={handleChange}
             />
-  
-            <select
+          <select
             name="category"
             value={contact.category}
-            onChange={handleChange}
+            onChange={handleChange} // can't seem to be able to select multiple items at once :()
             >
               {categories.map((category) => {
                 return (
@@ -118,11 +128,17 @@ function AddContact() {
                 );
               })}
             </select>
+            </div>
+          <div>
+            <textarea
+            placeholder="Notes..."
+            value={contact.notes}
+            onChange={handleChange}
+            className="notes-box"
+            name="notes"
+            />
 
           </div>
-          <button
-          type="submit"
-          >Submit</button>
         </form>
         </div>
       </div>
