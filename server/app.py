@@ -31,36 +31,50 @@ def create_contact():
         return jsonify({'error': str(e)}), 400
 
 
+
 # Index and filter contacts
 @app.route('/', methods=['GET'])
 def list_contacts():
     data = request.get_json()
 
-    # add to database
+    # if data.labels == "Contact Soon":
+    #     # if today's data - (last contacted + contact frequency) < 3
+    #     # get list with three sections, contact today, need to contact in 1 day, need to contact in 2 days
 
-    response = {'message': 'Contact added successfully'}
-    return jsonify(response), 201
-
-
-# Show contact by ID
+    try:
+        # response = contacts.find({"labels": {"$in": [data.category]}})
+        response = contacts.find({},{"category": data['category']})
+        category_contacts = list(response)
+        if len(category_contacts) == 0:
+            return jsonify({'message': 'No contacts in this category'}), 201
+        else:
+            formatted_contacts = [contact for contact in category_contacts]
+            return jsonify(formatted_contacts), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}),500
+    
+# Show contact by ID (working)
 @app.route('/contact', methods=['GET'])
 def show_contact():
-    contact_id = request.args.get('id')
+    data = request.get_json()
 
-    if not (contact_id and len(contact_id) > 0):
-        return jsonify({'error': 'Invalid contact ID'}), 400
+    # if not (contact_id and len(contact_id) > 0):
+    #     return jsonify({'error': 'Invalid contact ID'}), 400
 
     # retrieve from database
-    contact = ['Sophie', 'Xie', ['Blacklisted'], 'Company', 'Toronto', 'sophie@gmail.com',
-               '1234567890', 'notes notes notes', '02-02-2020']
+    contact = contacts.find_one({"_id": ObjectId(data['_id'])})
 
-    if contact:
-        keys = ['first_name', 'last_name', 'labels', 'company', 'location',
-                'email', 'phone_number', 'notes', 'last_contacted']
-        data = dict(zip(keys, contact))
-        return jsonify(data), 200
-    else:
-        return jsonify({'error': 'Contact not found'}), 404
+    try:
+        # keys = ['firstName', 'lastName', 'location', 'emailAddress', 'phoneNum',
+        #         'company', 'category', 'lastContacted', 'contactFrequency', 'notes']
+        # data = dict(zip(keys, contact))
+        # return jsonify(data), 200
+        if contact: 
+            return jsonify(contact), 200
+        else:
+            return jsonify({'message': 'Contact not found'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 404
 
 # Edit contact
 @app.route('/update_contact', methods=['PUT'])
