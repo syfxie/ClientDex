@@ -1,0 +1,58 @@
+.outer-container {
+    height: 70px;
+    max-width: 900px;
+    background-color: white;
+    border: #888888 2px solid;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.inner-container {
+    max-width:600px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.personal-info-container {
+    flex: 2;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.personal-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 10px;
+}
+
+.contact {
+    flex: 3;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px 0 10px;
+}
+
+.icon {
+    color:#C3C0C0;
+}
+
+.heading {
+    color: #00527A;
+    text-align: start;
+    margin: 0;
+}
+
+.text {
+    color: gray;
+    margin-top: 0;
+    margin-bottom: 0;
+}
