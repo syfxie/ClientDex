@@ -1,0 +1,20 @@
+button {
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    border-radius: 0;
+    padding: 5px;
+    font-family: 'JetBrains Mono', sans-serif;
+}
+
+button:enabled:hover {
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: none;
+}
+
+button:enabled:active {
+    box-shadow: inset 1px 2px 2px #888888;
+    font-weight: bold;
+    transition-duration: 100ms;
+}
