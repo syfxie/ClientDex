@@ -1,15 +1,11 @@
 from flask import Flask, request, jsonify
 from pymongo import MongoClient
 from flask_cors import CORS
-<<<<<<< HEAD
 from datetime import datetime, timezone
 from bson.objectid import ObjectId
-
-=======
 import speech_recognition as sr
 import subprocess
 from werkzeug.utils import secure_filename
->>>>>>> 6b74619 (Add audio saving ability)
 
 app = Flask(__name__)
 CORS(app)
@@ -17,14 +13,10 @@ CORS(app)
 CONNECTION_STRING = "mongodb+srv://uoft:oPqKe1qnlgxLVJQF@cluster0.fjluu9a.mongodb.net/?retryWrites=true&w=majority"
 client = MongoClient(CONNECTION_STRING)
 
-<<<<<<< HEAD
 dbname = client['contacts']
 contacts = dbname["contacts"]
-=======
-db = client.flask_db
-contacts = db.contacts
+
 r = sr.Recognizer() # audio recognizer
->>>>>>> 6b74619 (Add audio saving ability)
 
 # Add contact (working)
 @app.route('/add_contact', methods=['POST'])
@@ -120,7 +112,6 @@ def delete_contact():
     if not (contact_id and len(contact_id) > 0):
         return jsonify({'error': 'Invalid contact ID'}), 400
 
-<<<<<<< HEAD
     try:
         result = contacts.delete_one({'_id': ObjectId(contact_id)})
         if result.deleted_count == 1:
@@ -129,14 +120,7 @@ def delete_contact():
             return jsonify({'message': 'Contact not found'}), 404
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-=======
-    # remove from database
-    success = True
 
-    if success:
-        return jsonify(data), 200
-    else:
-        return jsonify({'error': 'Contact not found'}), 404
     
 @app.route('/listen', methods=["POST"])
 def listen():
@@ -148,4 +132,3 @@ def listen():
         return jsonify({'success': 'saved'})
     except Exception as e:
         return jsonify({'error': f'Failed to save audio: {str(e)}'}), 500
->>>>>>> 6b74619 (Add audio saving ability)
