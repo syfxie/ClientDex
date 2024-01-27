@@ -14,21 +14,20 @@ client = MongoClient(CONNECTION_STRING)
 dbname = client['contacts']
 contacts = dbname["contacts"]
 
-# Test route
-@app.route('/test', methods=['GET'])
-def my_profile():
-    return jsonify({"name": "Jessica"})
-
+# Add contact (working)
 @app.route('/add_contact', methods=['POST'])
 def create_contact():
     data = request.get_json()
     app.logger.info(data)
-
-    contacts.insert_one(data)
-    # check for invalid input
-
-    response = {'message': 'Contact added successfully'}
-    return jsonify(response), 201
+    
+    try:
+        if data['firstName'] != "" and data['lastName'] != "":
+            contacts.insert_one(data)
+        else:
+            return jsonify({'message': 'First and last name are required fields'})
+        return jsonify({'message': 'Contact added successfully'}), 201
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
 
 
 # Index and filter contacts
@@ -62,7 +61,7 @@ def show_contact():
     else:
         return jsonify({'error': 'Contact not found'}), 404
 
-
+# Edit contact
 @app.route('/update_contact', methods=['PUT'])
 def update_contact():
     data = request.get_json()
@@ -100,7 +99,7 @@ def update_contact():
 #         response = {'message': e}
 #         return jsonify(response), 400 
 
-
+# Delete contact (working)
 @app.route('/delete', methods=['DELETE'])
 def delete_contact():
     data = request.get_json()
