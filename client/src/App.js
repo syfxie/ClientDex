@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Home from './pages/Home';
 import AddContact from './pages/AddContact';
 import Navbar from './components/Navbar';
+import Mic from './components/Mic';
 
 function App() {
 	const [data, setdata] = useState("");
@@ -30,6 +31,7 @@ function App() {
           <Route path="/" element={<Home/>}/>
           <Route path="add-contact" element={<AddContact />} />
         </Routes>
+        <Mic></Mic>
       </div>
 		</div>
 	);

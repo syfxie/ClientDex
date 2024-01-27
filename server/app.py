@@ -3,9 +3,8 @@ from pymongo import MongoClient
 from flask_cors import CORS
 from datetime import datetime, timezone
 from bson.objectid import ObjectId
-import speech_recognition as sr
-import subprocess
-from werkzeug.utils import secure_filename
+import assemblyai as aai
+import keys
 
 app = Flask(__name__)
 CORS(app)
@@ -15,8 +14,6 @@ client = MongoClient(CONNECTION_STRING)
 
 dbname = client['contacts']
 contacts = dbname["contacts"]
-
-r = sr.Recognizer() # audio recognizer
 
 # Add contact (working)
 @app.route('/add_contact', methods=['POST'])
@@ -124,11 +121,17 @@ def delete_contact():
     
 @app.route('/listen', methods=["POST"])
 def listen():
-    print('here')
     try:
         audio_file = request.files['audio']
         # Save the audio file to a specific location
         audio_file.save('./audio.wav')
+
+        aai.settings.api_key = keys.assembly_key
+        transcriber = aai.Transcriber()
+
+        transcript = transcriber.transcribe("./audio.wav")
+
+        print(transcript.text)
         return jsonify({'success': 'saved'})
     except Exception as e:
         return jsonify({'error': f'Failed to save audio: {str(e)}'}), 500
