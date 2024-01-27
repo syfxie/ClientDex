@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 function App() {
-	const [data, setdata] = useState("");
+	const [data, setData] = useState("");
 
 	// Using useEffect for single rendering (example of how to get backend data)
 	useEffect(() => {
@@ -12,7 +12,7 @@ function App() {
       return response.json();
   })
     .then(function (bodyText) {
-        setdata(bodyText.name);
+        setData(bodyText.name);
     })
 	}, []);
 
