@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import "./App.css";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [data, setdata] = useState("");
+
+	// Using useEffect for single rendering (example of how to get backend data)
+	useEffect(() => {
+    fetch('http://localhost:5000/test', {
+      method : "GET"
+    })
+    .then(function (response) {
+      return response.json();
+  })
+    .then(function (bodyText) {
+        setdata(bodyText.name);
+    })
+	}, []);
+
+	return (
+		<div className="App">
+      <h1>React and flask</h1>
+      <p>{data}</p>
+
+		</div>
+	);
 }
 
 export default App;

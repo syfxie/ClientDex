@@ -1,13 +1,19 @@
 from flask import Flask, request, jsonify
 from pymongo import MongoClient
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 client = MongoClient('localhost', 27017)
 
 db = client.flask_db
 contacts = db.contacts
 
+# Test route
+@app.route('/test', methods=['GET'])
+def my_profile():
+    return jsonify({"name": "Jessica"})
 
 @app.route('/add_contact', methods=['POST'])
 def create_contact():
