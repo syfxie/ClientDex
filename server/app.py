@@ -1,13 +1,22 @@
+import json
+from datetime import datetime
+import keys
+
 from flask import Flask, request, jsonify
 from pymongo import MongoClient
 from flask_cors import CORS
-from datetime import datetime, timezone
 from bson.objectid import ObjectId
 import assemblyai as aai
-import keys
+import numpy as np
+
+from semantic_search.embed_and_search import embed_text, search
 
 app = Flask(__name__)
+
 CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
+
+cors = CORS(app, resources={r"/foo": {"origins": "http://localhost:5000"}})
 
 CONNECTION_STRING = "mongodb+srv://uoft:oPqKe1qnlgxLVJQF@cluster0.fjluu9a.mongodb.net/?retryWrites=true&w=majority"
 client = MongoClient(CONNECTION_STRING)
@@ -15,20 +24,41 @@ client = MongoClient(CONNECTION_STRING)
 dbname = client['contacts']
 contacts = dbname["contacts"]
 
+API_KEY = "PDiALOTJF7sERYakM8ZTY9QdPnIxtp0FfbkSMvTd"  # TODO: Add as env variable
+
+
+def get_embedding(doc):
+    copy = dict(doc)
+
+    # eliminate noise
+    if copy.get("_id"):
+        del copy["_id"]
+
+    if copy.get("embedding"):
+        del copy["embedding"]
+
+    json_string = json.dumps(copy, default=str)
+    print('text to embed: ', json_string)
+    return embed_text(json_string, API_KEY)
+
+
 # Add contact (working)
 @app.route('/add_contact', methods=['POST'])
 def create_contact():
     data = request.get_json()
     app.logger.info(data)
-    
+
     try:
         if data['firstName'] != "" and data['lastName'] != "":
+            data['embedding'] = get_embedding(data)
             contacts.insert_one(data)
+            print('Added contact with embedding: ', data)
         else:
             return jsonify({'message': 'First and last name are required fields'})
         return jsonify({'message': 'Contact added successfully'}), 201
     except Exception as e:
         return jsonify({'error': str(e)}), 400
+
 
 # Index and filter contacts (working)
 @app.route('/category', methods=['POST'])
@@ -47,8 +77,9 @@ def list_contacts():
         else:
             return jsonify(category_contacts), 200
     except Exception as e:
-        return jsonify({'error': str(e)}),500
-    
+        return jsonify({'error': str(e)}), 500
+
+
 # Show contact by ID (working)
 @app.route('/contact', methods=['GET'])
 def show_contact():
@@ -58,14 +89,15 @@ def show_contact():
         return jsonify({'error': 'Invalid contact ID'}), 400
 
     try:
-        contact = contacts.find_one({"_id": ObjectId(id)},{"embedding": 0})
+        contact = contacts.find_one({"_id": ObjectId(id)}, {"embedding": 0})
         contact['_id'] = str(contact['_id'])
-        if contact: 
+        if contact:
             return jsonify(contact), 200
         else:
             return jsonify({'message': 'Contact not found'}), 404
     except Exception as e:
         return jsonify({'error': str(e)}), 404
+
 
 # Edit contact (working)
 @app.route('/update_contact', methods=['PUT'])
@@ -75,9 +107,12 @@ def update_contact():
 
     if not (id and len(id) > 0):
         return jsonify({'error': 'Invalid contact ID'}), 400
-    
+
     try:
         result = contacts.update_one({'_id': ObjectId(id)}, {"$set": data})
+        data['embedding'] = get_embedding(result)
+        result = contacts.update_one({'_id': ObjectId(id)}, {"$set": data})
+
         if result.modified_count > 0:
             return jsonify({'message': 'Contact updated successfully'}), 200
         else:
@@ -85,7 +120,7 @@ def update_contact():
     except Exception as e:
         return jsonify({'error': str(e)}), 400
 
-    
+
 @app.route('/update_contact/add_meeting', methods=['PUT'])
 def add_meeting():
     data = request.get_json()
@@ -94,13 +129,16 @@ def add_meeting():
     # fix
     try:
         filter = {'_id': ObjectId(data['_id'])}
-        newdata = { "$set": { "lastContacted" : datetime.now() } }
-        contacts.update_one(filter, newdata)
+        newdata = {"$set": {"lastContacted": datetime.now()}}
+        result = contacts.update_one(filter, newdata)
+        newdata['embedding'] = get_embedding(result)
+        result = contacts.update_one(filter, newdata)
         response = {'message': 'Last meeting time updated'}
         return jsonify(response), 200
     except Exception as e:
         response = {'message': e}
-        return jsonify(response), 400 
+        return jsonify(response), 400
+
 
 # Delete contact (working)
 @app.route('/delete', methods=['DELETE'])
@@ -120,21 +158,64 @@ def delete_contact():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-    
-@app.route('/listen', methods=["POST"])
-def listen():
+
+# @app.route('/listen', methods=["POST"])
+# def listen():
+#     try:
+#         audio_file = request.files['audio']
+#         # Save the audio file to a specific location
+#         audio_file.save('./audio.wav')
+#
+#         aai.settings.api_key = keys.assembly_key
+#         transcriber = aai.Transcriber()
+#
+#         transcript = transcriber.transcribe("./audio.wav")
+#
+#         print(transcript.text)
+#         return jsonify({'success': 'saved'})
+#     except Exception as e:
+#         return jsonify({'error': f'Failed to save audio: {str(e)}'}), 500
+
+
+@app.route('/search', methods=["POST"])
+def search_contacts():
     try:
+        # audio_file = request.files.get('audio')
+        #
+        # # Save the audio file to a specific location
+        # audio_file.save('./audio.wav')
+        #
+        # aai.settings.api_key = keys.assembly_key
+        # transcriber = aai.Transcriber()
+        #
+        # transcript = transcriber.transcribe("./audio.wav")
+        #
+        # prompt = transcript.text
+
+        prompt = 'I want to talk to software engineers from RBC Canada'
+        print(prompt)
+
         print('here')
         audio_file = request.files['audio']
         # Save the audio file to a specific location
         audio_file.save('./audio.wav')
 
-        aai.settings.api_key = keys.assembly_key
-        transcriber = aai.Transcriber()
+        # get all embeddings from the database
+        embedded_vectors = []
 
-        transcript = transcriber.transcribe("./audio.wav")
+        for document in contacts.find():
+            embedded_vectors.append(np.array(document['embedding']))
+        print(f'Processed {len(embedded_vectors)} documents')
 
-        print(transcript.text)
-        return jsonify({'success': 'saved'})
+        result_id = search(prompt, embedded_vectors, API_KEY)
+        print('Search result id: ', result_id)
+
+        if result_id:
+            contact = contacts.find_one({"_id": result_id}, {"embedding": 0})
+            if contact:
+                contact['_id'] = str(contact['_id'])
+                return jsonify(contact), 200
+        else:
+            return jsonify({'message': 'No result matches your search'}), 404
     except Exception as e:
         return jsonify({'error': f'Failed to save audio: {str(e)}'}), 500

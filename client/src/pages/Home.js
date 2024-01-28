@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import ContactCard from "../components/contactCard";
 import ContactCell from "../components/contactCell";
 import { useNavigate } from "react-router-dom";
 import Mic from '../components/Mic';
@@ -79,6 +78,8 @@ export default function Home() {
                     )}
                 </div>
             </div>
+
+            <Mic/>
         </div>
     );
 }

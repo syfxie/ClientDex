@@ -35,7 +35,7 @@ export default function ContactCell({contact}){
             className="edit-btn"
             // onClick={toEditPage}
             >
-                Edit
+                EDIT
             </button>
             <IconButton className="icon"
                         size="large"
