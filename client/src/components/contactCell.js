@@ -5,7 +5,7 @@ import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOu
 
 import './contactCell.css'
 
-export default function ContactCell({contact}){
+export default function ContactCell({contact, onClick}){
     return (
         <div className="outer-container">
             <div className="inner-container">
@@ -24,7 +24,12 @@ export default function ContactCell({contact}){
                     <p className="text">{contact.phone}</p>
                 </div>
             </div>
-
+            <button 
+            className="edit-btn"
+            onClick={onClick}
+            >
+                Edit
+            </button>
             <IconButton className="icon"
                         size="large"
                         onClick={() => {}}
@@ -32,6 +37,7 @@ export default function ContactCell({contact}){
                         aria-label="View Contact">
                 <ArrowCircleRightOutlinedIcon />
             </IconButton>
+
         </div>
     );
 }

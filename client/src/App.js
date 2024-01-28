@@ -6,6 +6,7 @@ import Mic from './components/Mic';
 import './App.css';
 import Home from "./pages/Home";
 import AddContact from "./pages/AddContact";
+import EditContact from './pages/EditContact';
 
 function App() {
     const [data, setData] = useState("");
@@ -31,8 +32,8 @@ function App() {
                     <Routes>
                         <Route path="/" element={<Home/>}/>
                         <Route path="add-contact" element={<AddContact />} />
+                        <Route path="/edit-contact" element={<EditContact/>} />
                     </Routes>
-
             </div>
         </div>
     );

@@ -1,17 +1,18 @@
 import './EditContact.css';
 import { useState } from 'react';
 
-function EditContact({ previousContact }) {
+function EditContact({ id }) {
 
   const [contact, setContact] = useState({
-    firstName: previousContact.firstName || "",
-    lastName: previousContact.lastName || "",
-    location: previousContact.location || "",
-    emailAddress: previousContact.emailAddress || "",
-    phoneNum: previousContact.phoneNum || "",
-    company: previousContact.company || "",
-    category: previousContact.category || "",
-    notes: previousContact || ""
+    firstName: "",
+    lastName: "",
+    location: "",
+    emailAddress: "",
+    phoneNum: "",
+    company: "",
+    category: "",
+    notes: "",
+
   });
 
   const handleChange = (e) => {
@@ -56,12 +57,11 @@ function EditContact({ previousContact }) {
 
   return (
     <div>
-<<<<<<< HEAD
       <div className="main-container">
         <div className="form-container">
         <form onSubmit={handleSubmit}>
           <div className="top-bar">
-            <p className="add-contact">Add Contact</p>
+            <p className="add-contact">Edit Contact</p>
             <button
             type="submit"
             className="submit-btn"
@@ -116,7 +116,7 @@ function EditContact({ previousContact }) {
           <select
             name="category"
             value={contact.category}
-            onChange={handleChange} // can't seem to be able to select multiple items at once :()
+            onChange={handleChange} // can't seem to be able to select multiple items at once :(
             >
               {categories.map((category) => {
                 return (
@@ -140,10 +140,6 @@ function EditContact({ previousContact }) {
         </div>
       </div>
     </div>
-=======
-      Edit Contact Pages goes here
-    </div>                                                                      
->>>>>>> e761044a7915ccbb0a3b1fbb3c49b3de15ccb137
   );
 }
 
