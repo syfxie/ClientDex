@@ -45,17 +45,13 @@ def list_contacts():
     try:
         # response = contacts.find({"labels": {"$in": [data.category]}})
         response = contacts.find({"category": category})
-        print(response)
         category_contacts = list(response)
         for contact in category_contacts:
             contact['_id'] = str(contact['_id'])
-        print("hi")
-        print(category_contacts)
         if len(category_contacts) == 0:
             return jsonify({'message': 'No contacts in this category'}), 201
         else:
-            formatted_contacts = [contact for contact in category_contacts]
-            return jsonify(formatted_contacts), 200
+            return jsonify(category_contacts), 200
     except Exception as e:
         return jsonify({'error': str(e)}),500
     
