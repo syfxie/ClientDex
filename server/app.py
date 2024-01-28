@@ -30,9 +30,6 @@ def create_contact():
     except Exception as e:
         return jsonify({'error': str(e)}), 400
 
-
-
-
 # Index and filter contacts (working)
 @app.route('/', methods=['GET'])
 def list_contacts():
@@ -54,22 +51,17 @@ def list_contacts():
     except Exception as e:
         return jsonify({'error': str(e)}),500
     
-# Show contact by ID 
+# Show contact by ID (working)
 @app.route('/contact', methods=['GET'])
 def show_contact():
-    data = request.get_json()
+    id = request.args.get('_id')
 
-    # if not (contact_id and len(contact_id) > 0):
-    #     return jsonify({'error': 'Invalid contact ID'}), 400
-
-    # retrieve from database
-    contact = contacts.find_one({"_id": ObjectId(data['_id'])})
+    if not (id and len(id) > 0):
+        return jsonify({'error': 'Invalid contact ID'}), 400
 
     try:
-        # keys = ['firstName', 'lastName', 'location', 'emailAddress', 'phoneNum',
-        #         'company', 'category', 'lastContacted', 'contactFrequency', 'notes']
-        # data = dict(zip(keys, contact))
-        # return jsonify(data), 200
+        contact = contacts.find_one({"_id": ObjectId(id)},{"embedding": 0})
+        contact['_id'] = str(contact['_id'])
         if contact: 
             return jsonify(contact), 200
         else:
