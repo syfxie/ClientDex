@@ -20,6 +20,7 @@ const tempContact = {
 export default function Home() {
     const [contacts, setContacts] = useState([tempContact, tempContact, tempContact, tempContact, tempContact]);
     const [category, setCategory] = useState('Contact Soon'); // String containing the category of contacts
+    const [prevTallest, setPrevTallest] = useState("first");
 
     const changeContacts = async (c, id) => {
         setCategory(c);
@@ -29,8 +30,11 @@ export default function Home() {
                 body: category
             });
             setContacts(response.data);
-            document.getElementById(id);
-            
+            const currElement = document.getElementById(id);
+            currElement.classList.add('taller');
+            const prevElement = document.getElementById(prevTallest);
+            prevElement.classList.remove('taller');
+            setPrevTallest(currElement);
         } catch {
             console.log('failed to switch to category ', category);
         }
@@ -38,13 +42,13 @@ export default function Home() {
 
     useEffect(() => {
         setContacts(contacts);
-    })
+    }, [contacts])
 
     return (
         <div className='home'>
             <div className='contents'>
                 <div className='tabs'>
-                    <div className='darkTab' id="first" onClick={() => changeContacts('Contact Soon', "first")}>Contact Soon</div>
+                    <div className='darkTab taller' id="first" onClick={() => changeContacts('Contact Soon', "first")}>Contact Soon</div>
                     <div className='lightTab' id="second" onClick={() => changeContacts('Potential Customer', 'second')}>Potential Customer</div>
                     <div className='darkTab' id="third" onClick={() => changeContacts('Cold Calls', 'third')}>Cold Calls</div>
                     <div className='lightTab' id="fourth" onClick={() => changeContacts('Current Clients', 'fourth')}>Current Clients</div>

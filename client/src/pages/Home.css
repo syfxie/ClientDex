@@ -21,6 +21,11 @@
     display: flex;
 }
 
+.taller {
+    margin-top: -1.5em;
+    background-color: inherit;
+}
+
 .darkTab {
     background-color: #00527A;
     padding: 5px;
@@ -32,3 +37,5 @@
     padding: 5px;
     color: #00527A;
 }
+
+
