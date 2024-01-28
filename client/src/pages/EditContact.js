@@ -1,8 +1,12 @@
-import './EditContact.css';
-import { useState } from 'react';
+import './AddContact.css';
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
+import { useState, useEffect } from 'react';
 
-function EditContact({ id }) {
+function EditContact() {
+  const navigate = useNavigate();
+  const [submitted, setIsSubmitted] = useState(false);
 
+  // simplified version of contact for now
   const [contact, setContact] = useState({
     firstName: "",
     lastName: "",
@@ -11,8 +15,7 @@ function EditContact({ id }) {
     phoneNum: "",
     company: "",
     category: "",
-    notes: "",
-
+    notes: ""
   });
 
   const handleChange = (e) => {
@@ -24,8 +27,9 @@ function EditContact({ id }) {
   ]
 
   const handleSubmit = async (e) => {
+    setIsSubmitted(true);
     e.preventDefault();
-    console.log("submitted!")
+    alert("You have added an entry!")
     console.log(contact)
     try {
       const response = await fetch('http://127.0.0.1:5000/update_contact', {
@@ -40,20 +44,15 @@ function EditContact({ id }) {
       console.log(data);
 
       // set back to empty object
-      setContact({
-        firstName: "",
-        lastName: "",
-        location: "",
-        emailAddress: "",
-        phoneNum: "",
-        company: "",
-        category: "",
-        notes: ""
-      })
     } catch (error) {
       console.log(error)
     }
   }
+
+  const cancel = () => {
+    navigate("/home");
+  }
+
 
   return (
     <div>
@@ -62,11 +61,18 @@ function EditContact({ id }) {
         <form onSubmit={handleSubmit}>
           <div className="top-bar">
             <p className="add-contact">Edit Contact</p>
+            <div>
             <button
-            type="submit"
-            className="submit-btn"
-            >Done
+              onClick={cancel}
+              className="submit-btn"
+              >Cancel
             </button>
+              <button
+                type="submit"
+                className="submit-btn"
+                >Done
+              </button>
+            </div>
           </div>
           <div className="fields-top">
             <input
@@ -116,7 +122,7 @@ function EditContact({ id }) {
           <select
             name="category"
             value={contact.category}
-            onChange={handleChange} // can't seem to be able to select multiple items at once :(
+            onChange={handleChange} // can't seem to be able to select multiple items at once :()
             >
               {categories.map((category) => {
                 return (

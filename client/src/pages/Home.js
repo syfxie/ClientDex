@@ -38,6 +38,13 @@ export default function Home() {
         }
     }
 
+    let navigate = useNavigate();
+    const routeChange = () =>{ 
+        let path = `edit-contact`; 
+        navigate(path);
+      }
+    
+
     useEffect(() => {
         setContacts(contacts);
     })
@@ -57,7 +64,7 @@ export default function Home() {
                 </div>
                 <div className="list-container">
                     {contacts.map((aContact) => {
-                        return <ContactCell contact={aContact}/>
+                        return <ContactCell contact={aContact} onClick={routeChange}/>
                     }
                     )}
                 </div>
