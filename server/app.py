@@ -98,21 +98,21 @@ def update_contact():
     else:
         return jsonify({'error': 'Contact not found'}), 404
     
-# @app.route('/update_contact/add_meeting', methods=['PUT'])
-# def add_meeting():
-#     data = request.get_json()
-#     app.logger.info(data)
+@app.route('/update_contact/add_meeting', methods=['PUT'])
+def add_meeting():
+    data = request.get_json()
+    app.logger.info(data)
 
-#     # fix
-#     try:
-#         filter = {'_id': data['_id']}
-#         newdata = { "$set": { "lastContacted" : datetime.datetime.now(tz=datetime.timezone.utc) } }
-#         contacts.update_one(filter, newdata)
-#         response = {'message': 'Last meeting time updated'}
-#         return jsonify(response), 200
-#     except Exception as e:
-#         response = {'message': e}
-#         return jsonify(response), 400 
+    # fix
+    try:
+        filter = {'_id': data['_id']}
+        newdata = { "$set": { "lastContacted" : datetime.datetime.now(tz=datetime.timezone.utc) } }
+        contacts.update_one(filter, newdata)
+        response = {'message': 'Last meeting time updated'}
+        return jsonify(response), 200
+    except Exception as e:
+        response = {'message': e}
+        return jsonify(response), 400 
 
 # Delete contact (working)
 @app.route('/delete', methods=['DELETE'])

@@ -24,7 +24,7 @@ export default function Home() {
     return (
         <div className="list-container">
             {contactsArray.map((aContact) => {
-                return <ContactCell contact={tempContact}/>
+                return <ContactCell contact={aContact}/>
             }
             )}
         </div>
