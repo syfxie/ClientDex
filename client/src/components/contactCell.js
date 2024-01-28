@@ -22,7 +22,7 @@ export default function ContactCell({contact}){
                     <AccountCircleSharpIcon className="icon" fontSize={"large"}/>
 
                     <div className="personal-info">
-                        <h3 className="heading">{contact.first_name} {contact.last_name}
+                        <h3 className="heading">{contact.firstName} {contact.lastName}
                     </h3>
                     <p className="text">{contact.company}</p>
                     </div>

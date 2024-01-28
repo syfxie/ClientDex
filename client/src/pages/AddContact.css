@@ -34,7 +34,7 @@
 
 .form-container {
   background-color: #00527A;
-  width: 1200px;
+  max-width: 1000px;
   height: 520px;
   border-radius: 5px;
   padding: 10px;
@@ -49,6 +49,7 @@ input, .notes-box {
   padding: 20px 14px;
   font-family: 'JetBrains Mono', Arial;
   border: none;
+  max-width: 100%;
 }
 
 select {

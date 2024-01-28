@@ -14,6 +14,7 @@ from semantic_search.embed_and_search import embed_text, search
 app = Flask(__name__)
 
 CORS(app)
+
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 cors = CORS(app, resources={r"/foo": {"origins": "http://localhost:5000"}})
@@ -64,14 +65,11 @@ def create_contact():
     except Exception as e:
         return jsonify({'error': str(e)}), 400
 
-
 # Index and filter contacts (working)
 @app.route('/category', methods=['POST'])
-def list_contacts():
-    # if data.labels == "Contact Soon":
-    #     # if today's data - (last contacted + contact frequency) < 3
-    #     # get list with three sections, contact today, need to contact in 1 day, need to contact in 2 days
+def filter_contacts():
     data = (request.get_json())['category']
+
     try:
         response = contacts.find({"category": data},{"embedding":0})
         category_contacts = list(response)
