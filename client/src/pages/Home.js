@@ -38,7 +38,6 @@ export default function Home() {
                 console.log(response);
                 throw new Error('Network response was not ok');
             }
-            console.log(id);
             const responseData = await response.json();
             // const currElement = document.getElementById(id.toString());
             // console.log(currElement.classList);
@@ -47,6 +46,7 @@ export default function Home() {
             // prevElement.classList.remove('taller');
             // console.log(prevElement);
             // setPrevTallest(currElement);
+            console.log(responseData);
             setContacts(responseData);
             setCategory(c);
         } catch (error) {
@@ -61,7 +61,6 @@ export default function Home() {
     return (
         <div className='home'>
             <div className='contents'>
-                <Mic></Mic>
                 <div className='tabs'>
                     <div className='darkTab taller' id="first" onClick={() => changeContacts('Contact Soon', "first")}>Contact Soon</div>
                     <div className='lightTab' id="second" onClick={() => changeContacts('Potential Client', 'second')}>Potential Client</div>
