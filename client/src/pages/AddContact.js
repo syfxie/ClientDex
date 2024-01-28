@@ -2,6 +2,7 @@ import './AddContact.css';
 import { useState, useEffect } from 'react';
 
 function AddContact() {
+  const [submitted, setIsSubmitted] = useState(false);
 
   // simplified version of contact for now
   const [contact, setContact] = useState({
@@ -24,8 +25,9 @@ function AddContact() {
   ]
 
   const handleSubmit = async (e) => {
+    setIsSubmitted(true);
     e.preventDefault();
-    console.log("submitted!")
+    alert("You have added an entry!")
     console.log(contact)
     try {
       const response = await fetch('http://127.0.0.1:5000/add_contact', {
@@ -40,24 +42,27 @@ function AddContact() {
       console.log(data);
 
       // set back to empty object
-      setContact({
-        firstName: "",
-        lastName: "",
-        location: "",
-        emailAddress: "",
-        phoneNum: "",
-        company: "",
-        category: "",
-        notes: ""
-      })
     } catch (error) {
       console.log(error)
     }
   }
 
+  useEffect(() => {
+    setContact({
+      firstName: "",
+      lastName: "",
+      location: "",
+      emailAddress: "",
+      phoneNum: "",
+      company: "",
+      category: "",
+      notes: ""
+    })
+    setIsSubmitted(false);
+  }, [submitted])
+
   return (
     <div>
-      <p className="heading">Enter your prompt here...</p>
       <div className="main-container">
         <div className="form-container">
         <form onSubmit={handleSubmit}>
@@ -137,7 +142,6 @@ function AddContact() {
             className="notes-box"
             name="notes"
             />
-
           </div>
         </form>
         </div>

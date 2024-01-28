@@ -77,27 +77,6 @@ def show_contact():
         return jsonify({'error': str(e)}), 404
 
 # Edit contact
-@app.route('/update_contact', methods=['PUT'])
-def update_contact():
-    data = request.get_json()
-
-    contact_id = data['id']
-
-    if not (contact_id and len(contact_id) > 0):
-        return jsonify({'error': 'Invalid contact ID'}), 400
-
-    # edit database
-    contact = ['Sophie', 'Xie', ['Potential Customer'], 'Company', 'Toronto', 'sophie@gmail.com',
-               '1234567890', 'notes notes notes', '02-02-2020']
-
-    if contact:
-        keys = ['first_name', 'last_name', 'labels', 'company', 'location',
-                'email', 'phone_number', 'notes', 'last_contacted']
-        data = dict(zip(keys, contact))
-        return jsonify(data), 200
-    else:
-        return jsonify({'error': 'Contact not found'}), 404
-    
 # @app.route('/update_contact/add_meeting', methods=['PUT'])
 # def add_meeting():
 #     data = request.get_json()

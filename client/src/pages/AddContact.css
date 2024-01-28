@@ -1,8 +1,3 @@
-.heading {
-  margin-top: 60px;
-  margin-bottom: 30px;
-}
-
 .top-bar {
   display: flex;
   justify-content: space-between;
@@ -17,7 +12,8 @@
 
 .submit-btn {
   height: 30px;
-  margin-top: 40px;
+  margin-top: 20px;
+  margin-bottom: 30px;
   margin-right: 10px;
   color: #00527A;
   font-family: 'JetBrains Mono', Arial;
@@ -28,6 +24,7 @@
 }
 
 .main-container {
+  margin-top: 70px;
   display: flex;
   justify-content: center;
 }
@@ -35,7 +32,7 @@
 .form-container {
   background-color: #00527A;
   width: 1200px;
-  height: 500px;
+  height: 520px;
   border-radius: 25px;
 }
 
@@ -75,6 +72,6 @@ select {
 
 .notes-box {
   margin-top: 18px;
-  height: 205px;
+  height: 255px;
   width: 1168px;
 }
