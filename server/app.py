@@ -77,21 +77,42 @@ def show_contact():
         return jsonify({'error': str(e)}), 404
 
 # Edit contact
-# @app.route('/update_contact/add_meeting', methods=['PUT'])
-# def add_meeting():
-#     data = request.get_json()
-#     app.logger.info(data)
+@app.route('/update_contact', methods=['PUT'])
+def update_contact():
+    data = request.get_json()
 
-#     # fix
-#     try:
-#         filter = {'_id': data['_id']}
-#         newdata = { "$set": { "lastContacted" : datetime.datetime.now(tz=datetime.timezone.utc) } }
-#         contacts.update_one(filter, newdata)
-#         response = {'message': 'Last meeting time updated'}
-#         return jsonify(response), 200
-#     except Exception as e:
-#         response = {'message': e}
-#         return jsonify(response), 400 
+    contact_id = data['id']
+
+    if not (contact_id and len(contact_id) > 0):
+        return jsonify({'error': 'Invalid contact ID'}), 400
+
+    # edit database
+    contact = ['Sophie', 'Xie', ['Potential Customer'], 'Company', 'Toronto', 'sophie@gmail.com',
+               '1234567890', 'notes notes notes', '02-02-2020']
+
+    if contact:
+        keys = ['first_name', 'last_name', 'labels', 'company', 'location',
+                'email', 'phone_number', 'notes', 'last_contacted']
+        data = dict(zip(keys, contact))
+        return jsonify(data), 200
+    else:
+        return jsonify({'error': 'Contact not found'}), 404
+    
+@app.route('/update_contact/add_meeting', methods=['PUT'])
+def add_meeting():
+    data = request.get_json()
+    app.logger.info(data)
+
+    # fix
+    try:
+        filter = {'_id': data['_id']}
+        newdata = { "$set": { "lastContacted" : datetime.datetime.now(tz=datetime.timezone.utc) } }
+        contacts.update_one(filter, newdata)
+        response = {'message': 'Last meeting time updated'}
+        return jsonify(response), 200
+    except Exception as e:
+        response = {'message': e}
+        return jsonify(response), 400 
 
 # Delete contact (working)
 @app.route('/delete', methods=['DELETE'])

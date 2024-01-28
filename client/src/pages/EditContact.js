@@ -56,6 +56,7 @@ function EditContact({ previousContact }) {
 
   return (
     <div>
+<<<<<<< HEAD
       <div className="main-container">
         <div className="form-container">
         <form onSubmit={handleSubmit}>
@@ -139,6 +140,10 @@ function EditContact({ previousContact }) {
         </div>
       </div>
     </div>
+=======
+      Edit Contact Pages goes here
+    </div>                                                                      
+>>>>>>> e761044a7915ccbb0a3b1fbb3c49b3de15ccb137
   );
 }
 

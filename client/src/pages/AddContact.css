@@ -1,6 +1,7 @@
 .top-bar {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 1em;
 }
 
 .add-contact {
@@ -8,6 +9,7 @@
   font-weight: bold;
   font-size: 34px;
   margin-left: 5px;
+  margin-top: 1em;
 }
 
 .submit-btn {
@@ -27,6 +29,7 @@
   margin-top: 70px;
   display: flex;
   justify-content: center;
+  margin-top: 5em;
 }
 
 .form-container {
@@ -41,7 +44,7 @@ form {
   margin-left: 12px;
 }
 
-input {
+input, .notes-box {
   padding: 20px 14px;
   font-family: 'JetBrains Mono', Arial;
   border: none;
@@ -72,6 +75,11 @@ select {
 
 .notes-box {
   margin-top: 18px;
+<<<<<<< HEAD
   height: 255px;
   width: 1168px;
+=======
+  height: 14em;
+  width: 86em;
+>>>>>>> e761044a7915ccbb0a3b1fbb3c49b3de15ccb137
 }
