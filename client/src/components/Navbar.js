@@ -11,7 +11,7 @@ function Navbar() {
             <Link to="/add-contact">Add Contact</Link>
           </li>
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/home">Home</Link>
           </li>
         </ul>
       </div>

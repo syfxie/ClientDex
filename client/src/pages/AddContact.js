@@ -50,7 +50,7 @@ function AddContact() {
   }
 
   const cancel = () => {
-    navigate("/");
+    navigate("/home");
   }
 
   useEffect(() => {

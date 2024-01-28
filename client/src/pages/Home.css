@@ -9,7 +9,6 @@
 .list-container {
     height: 300px;
     overflow: auto;
-    overflow-scrolling: auto;
     max-width: 913px;
     display: flex;
     flex-direction: column;
