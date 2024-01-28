@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { AudioRecorder, useAudioRecorder } from 'react-audio-voice-recorder';
 import './Mic.css';
 
@@ -6,7 +7,6 @@ const Mic = () => {
   const recorderControls = useAudioRecorder();
 
   const [audioBlob, setAudioBlob] = useState(null);
-  const [prompt, setPrompt] = useState('');
 
   const addAudioElement = async (blob) => {
     setAudioBlob(blob);
@@ -19,55 +19,26 @@ const Mic = () => {
       formData.append('audio', audioBlob, 'audio.webm');
 
       try {
-        const response = await fetch('http://localhost:5000/search', {
+        fetch('http://localhost:5000/search', {
             method: 'POST',
             body: formData,
+        })
+        .then((response) => response.json())
+        .then((response)=> {
+          console.log('Audio saved successfully:', response);
+          let url = '/details/' + response['contact_id'];
+          <Link to={url}/>
+
         });
-        console.log('Audio saved successfully:', response.data);
       } catch (error) {
         console.error('Failed to save audio:', error);
       }
     }
   };
 
-  const handleSubmit = async () => {
-      try {
-          const response = await fetch('http://localhost:5000/search', {
-              method: 'POST',
-              body: JSON.stringify({
-                  prompt: prompt
-              }),
-              contentType: "application/json",
-          });
-          console.log('Audio saved successfully:', response.data);
-      } catch (error) {
-          console.error('Failed to save audio:', error);
-      }
-  }
-
   return (
       <div className='audio-input'>
       <p id="prompt">Ask me to help find a contact!</p>
-        <form onSubmit={handleSubmit}>
-          <div className="fields-top">
-            <input
-              type="text"
-              placeholder="Search..."
-              name="prompt"
-              value={prompt}
-              onChange={(e) => setPrompt(e.target.value)}
-            />
-          </div>
-          <div className="top-bar">
-            <div>
-              <button
-                type="submit"
-                className="submit-btn">
-                Done
-              </button>
-            </div>
-          </div>
-        </form>
         <AudioRecorder
           onRecordingComplete={(blob) => addAudioElement(blob)}
           recorderControls={recorderControls}

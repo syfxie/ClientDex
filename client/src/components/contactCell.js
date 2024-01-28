@@ -9,8 +9,9 @@ import Button from "./button";
 
 export default function ContactCell({contact}){
     const navigate = useNavigate();
+    console.log(contact);
     const toDetailPage = () => {
-        let path = `details/${contact.id}`;
+        let path = `/details/${contact._id}`
         navigate(path);
     }
 
