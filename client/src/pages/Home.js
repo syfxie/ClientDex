@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import ContactCard from "../components/contactCard";
 import ContactCell from "../components/contactCell";
+import { useNavigate } from "react-router-dom";
 
 import './Home.css'
 
@@ -17,6 +18,7 @@ const tempContact = {
     labels: ['Potential Customer', 'Contact Soon'],
     contact_frequency: 7
 }
+
 export default function Home() {
     const [contacts, setContacts] = useState([tempContact, tempContact, tempContact, tempContact, tempContact]);
     const [category, setCategory] = useState('Contact Soon'); // String containing the category of contacts
@@ -65,5 +67,5 @@ export default function Home() {
                 </div>
             </div>
         </div>
-    )
+    );
 }
