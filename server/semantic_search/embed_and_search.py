@@ -11,10 +11,10 @@ def embed_text(text, api_key, model_name="embed-english-v3.0", input_type="searc
     try:
         # Each user is currently limited to 100 contacts
         embed_texts = [text] + [''] * 99
-        vector = co.embed(texts=embed_texts, model=model_name, input_type=input_type).embeddings[0]
+        result = co.embed(texts=embed_texts, model=model_name, input_type=input_type).embeddings[0]
 
         print(f'successfully embedded text: {text}')
-        return vector
+        return result
     except requests.exceptions.ConnectionError:
         print('Connection lost, retrying')
         time.sleep(1)
