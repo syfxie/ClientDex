@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import ContactCard from "../components/contactCard";
 import ContactCell from "../components/contactCell";
 import { useNavigate } from "react-router-dom";
-
 import './Home.css'
 
 const tempContact = {
@@ -20,7 +19,7 @@ const tempContact = {
 }
 
 export default function Home() {
-    const [contacts, setContacts] = useState([tempContact, tempContact, tempContact, tempContact, tempContact]);
+    const [contacts, setContacts] = useState([tepContact, tempContact, tempContact, tempContact, tempContact]);
     const [category, setCategory] = useState('Contact Soon'); // String containing the category of contacts
     const [prevTallest, setPrevTallest] = useState("first");
 
@@ -43,11 +42,11 @@ export default function Home() {
     }
 
     let navigate = useNavigate();
-    const routeChange = () =>{ 
+    const toEditPage = () =>{ 
         let path = `edit-contact`; 
         navigate(path);
       }
-    
+
 
     useEffect(() => {
         setContacts(contacts);
@@ -68,7 +67,7 @@ export default function Home() {
                 </div>
                 <div className="list-container">
                     {contacts.map((aContact) => {
-                        return <ContactCell contact={aContact} onClick={routeChange}/>
+                        return <ContactCell contact={aContact}/>
                     }
                     )}
                 </div>
