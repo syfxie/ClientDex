@@ -46,34 +46,34 @@ const Mic = () => {
   }
 
   return (
-      <div>
-          <AudioRecorder
-              onRecordingComplete={(blob) => addAudioElement(blob)}
-              recorderControls={recorderControls}
-          />
-          <form onSubmit={handleSubmit}>
-              <div className="top-bar">
-                  <div>
-                      <button
-                          type="submit"
-                          className="submit-btn">
-                          Done
-                      </button>
-                  </div>
-              </div>
-
-              <div className="fields-top">
-                  <input
-                      type="text"
-                      placeholder="Search..."
-                      name="prompt"
-                      value={prompt}
-                      onChange={(e) => setPrompt(e.target.value)}
-                  />
-              </div>
-          </form>
-          <button onClick={recorderControls.stopRecording}>Stop recording</button>
-          <button onClick={handleSaveAudio}>Save Audio</button>
+      <div className='audio-input'>
+      <p id="prompt">Ask me to help find a contact!</p>
+        <form onSubmit={handleSubmit}>
+          <div className="fields-top">
+            <input
+              type="text"
+              placeholder="Search..."
+              name="prompt"
+              value={prompt}
+              onChange={(e) => setPrompt(e.target.value)}
+            />
+          </div>
+          <div className="top-bar">
+            <div>
+              <button
+                type="submit"
+                className="submit-btn">
+                Done
+              </button>
+            </div>
+          </div>
+        </form>
+        <AudioRecorder
+          onRecordingComplete={(blob) => addAudioElement(blob)}
+          recorderControls={recorderControls}
+        />
+        <button onClick={recorderControls.stopRecording}>Stop recording</button>
+        <button onClick={handleSaveAudio}>Save Audio</button>
       </div>
   );
 };

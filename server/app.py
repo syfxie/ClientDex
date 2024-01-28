@@ -183,31 +183,27 @@ def delete_contact():
 @app.route('/search', methods=["POST"])
 def search_contacts():
     try:
-        # audio_file = request.files.get('audio')
-        #
-        # # Save the audio file to a specific location
-        # audio_file.save('./audio.wav')
-        #
-        # aai.settings.api_key = keys.assembly_key
-        # transcriber = aai.Transcriber()
-        #
-        # transcript = transcriber.transcribe("./audio.wav")
-        #
-        # prompt = transcript.text
+        audio_file = request.files.get('audio')
+
+        # Save the audio file to a specific location
+        audio_file.save('./audio.wav')
+
+        aai.settings.api_key = keys.assembly_key
+        transcriber = aai.Transcriber()
+
+        transcript = transcriber.transcribe("./audio.wav")
+
+        prompt = transcript.text
 
         prompt = 'I want to talk to software engineers from RBC Canada'
         print(prompt)
-
-        print('here')
-        audio_file = request.files['audio']
-        # Save the audio file to a specific location
-        audio_file.save('./audio.wav')
 
         # get all embeddings from the database
         embedded_vectors = []
 
         for document in contacts.find():
-            embedded_vectors.append(np.array(document['embedding']))
+            if document.get('embedding'):
+                embedded_vectors.append({'id': document['_id'], 'embedding': np.array(document['embedding'])})
         print(f'Processed {len(embedded_vectors)} documents')
 
         result_id = search(prompt, embedded_vectors, API_KEY)
