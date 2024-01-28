@@ -4,7 +4,7 @@ function EditContact() {
   return (
     <div>
       Edit Contact Pages goes here
-    </div>
+    </div>                                                                      
   );
 }
 

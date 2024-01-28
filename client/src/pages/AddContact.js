@@ -57,17 +57,23 @@ function AddContact() {
 
   return (
     <div>
-      <p className="heading">Enter your prompt here...</p>
       <div className="main-container">
         <div className="form-container">
         <form onSubmit={handleSubmit}>
           <div className="top-bar">
             <p className="add-contact">Add Contact</p>
-            <button
-            type="submit"
-            className="submit-btn"
-            >Done
-            </button>
+            <div>
+              <button
+              type="submit"
+              className="submit-btn"
+              >Cancel
+              </button>
+              <button
+              type="submit"
+              className="submit-btn"
+              >Done
+              </button>
+            </div>
           </div>
           {/* do the styling later */}
           <div className="fields-top">
@@ -137,7 +143,6 @@ function AddContact() {
             className="notes-box"
             name="notes"
             />
-
           </div>
         </form>
         </div>

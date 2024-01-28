@@ -32,7 +32,6 @@ function App() {
                         <Route path="/" element={<Home/>}/>
                         <Route path="add-contact" element={<AddContact />} />
                     </Routes>
-                <Mic></Mic>
             </div>
         </div>
     );
