@@ -32,10 +32,11 @@ def create_contact():
 
 
 
+
 # Index and filter contacts
 @app.route('/', methods=['GET'])
 def list_contacts():
-    data = request.get_json()
+    category = request.args.get('category')
 
     # if data.labels == "Contact Soon":
     #     # if today's data - (last contacted + contact frequency) < 3
@@ -43,8 +44,13 @@ def list_contacts():
 
     try:
         # response = contacts.find({"labels": {"$in": [data.category]}})
-        response = contacts.find({},{"category": data['category']})
+        response = contacts.find({"category": category})
+        print(response)
         category_contacts = list(response)
+        for contact in category_contacts:
+            contact['_id'] = str(contact['_id'])
+        print("hi")
+        print(category_contacts)
         if len(category_contacts) == 0:
             return jsonify({'message': 'No contacts in this category'}), 201
         else:
