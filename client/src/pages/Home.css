@@ -1,14 +1,39 @@
+.contents {
+    margin: auto;
+    width: 90%;
+    padding-top: 2em;
+    margin-left: 10em;
+    margin-top: 3em;
+}
+
 .list-container {
     height: 300px;
+<<<<<<< HEAD
     overflow: auto;
     max-width: 900px;
+=======
+    overflow-scrolling: auto;
+    max-width: 913px;
+>>>>>>> 377c78ffa39e25421638de03d898eaaa85399771
     display: flex;
     flex-direction: column;
     gap: 10px;
-    padding:30px;
+    padding: 30px;
     background-color: #00527A;
 }
 
 .tabs {
     display: flex;
+}
+
+.darkTab {
+    background-color: #00527A;
+    padding: 5px;
+    color: antiquewhite;
+}
+
+.lightTab {
+    background-color: antiquewhite;
+    padding: 5px;
+    color: #00527A;
 }

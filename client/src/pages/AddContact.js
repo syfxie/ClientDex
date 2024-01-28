@@ -1,7 +1,9 @@
 import './AddContact.css';
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { useState, useEffect } from 'react';
 
 function AddContact() {
+  const navigate = useNavigate();
   const [submitted, setIsSubmitted] = useState(false);
 
   // simplified version of contact for now
@@ -47,6 +49,10 @@ function AddContact() {
     }
   }
 
+  const cancel = () => {
+    navigate("/");
+  }
+
   useEffect(() => {
     setContact({
       firstName: "",
@@ -69,15 +75,15 @@ function AddContact() {
           <div className="top-bar">
             <p className="add-contact">Add Contact</p>
             <div>
-              <button
-              type="submit"
+            <button
+              onClick={cancel}
               className="submit-btn"
               >Cancel
-              </button>
+            </button>
               <button
-              type="submit"
-              className="submit-btn"
-              >Done
+                type="submit"
+                className="submit-btn"
+                >Done
               </button>
             </div>
           </div>
