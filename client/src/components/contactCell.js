@@ -2,10 +2,17 @@ import React from 'react';
 import IconButton from '@mui/material/IconButton';
 import AccountCircleSharpIcon from '@mui/icons-material/AccountCircleSharp';
 import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
+import { useNavigate } from 'react-router-dom';
 
 import './contactCell.css'
 
-export default function ContactCell({contact, onClick}){
+export default function ContactCell({contact}){
+    const navigate = useNavigate();
+    const toDetailPage = () => {
+        let path = `details/${contact.id}`;
+        navigate(path);
+    }
+
     return (
         <div className="outer-container">
             <div className="inner-container">
@@ -26,15 +33,16 @@ export default function ContactCell({contact, onClick}){
             </div>
             <button 
             className="edit-btn"
-            onClick={onClick}
+            // onClick={toEditPage}
             >
                 Edit
             </button>
             <IconButton className="icon"
                         size="large"
-                        onClick={() => {}}
+                        onClick={toDetailPage}
                         disableFocusRipple
-                        aria-label="View Contact">
+                        aria-label="View Contact"
+                        >
                 <ArrowCircleRightOutlinedIcon />
             </IconButton>
 
