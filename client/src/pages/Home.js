@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import ContactCard from "../components/contactCard";
 import ContactCell from "../components/contactCell";
 import { useNavigate } from "react-router-dom";
+import Mic from '../components/Mic';
 
 import './Home.css'
 
@@ -66,6 +67,7 @@ export default function Home() {
 
     return (
         <div className='home'>
+            <Mic></Mic>
             <div className='contents'>
                 <div className='tabs'>
                     <div className='darkTab taller' id="first" onClick={() => changeContacts('Contact Soon', "first")}>Contact Soon</div>

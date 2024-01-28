@@ -36,7 +36,6 @@ def list_contacts():
     # if data.labels == "Contact Soon":
     #     # if today's data - (last contacted + contact frequency) < 3
     #     # get list with three sections, contact today, need to contact in 1 day, need to contact in 2 days
-    print('here')
     data = (request.get_json())['category']
     try:
         response = contacts.find({"category": data},{"embedding":0})
@@ -125,6 +124,7 @@ def delete_contact():
 @app.route('/listen', methods=["POST"])
 def listen():
     try:
+        print('here')
         audio_file = request.files['audio']
         # Save the audio file to a specific location
         audio_file.save('./audio.wav')
