@@ -61,7 +61,6 @@ export default function Home() {
     return (
         <div className='home'>
             <div className='contents'>
-                <Mic></Mic>
                 <div className='tabs'>
                     <div className='darkTab taller' id="first" onClick={() => changeContacts('Contact Soon', "first")}>Contact Soon</div>
                     <div className='lightTab' id="second" onClick={() => changeContacts('Potential Client', 'second')}>Potential Client</div>
