@@ -1,9 +1,24 @@
+nav {
+  background-color: #00527A;
+}
+
+nav > div {
+  display: flex;
+  justify-content: space-between;
+}
+
+#title {
+  margin-left: 1em;
+  margin-top: 0.5em;
+  color: white;
+  float: left;
+}
+
 ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #00527A;
 }
 
 li {
@@ -14,7 +29,7 @@ li a {
   display: block;
   color: white;
   text-align: center;
-  padding: 26px 18px;
+  padding: 2em 1.5em;
   text-decoration: none;
 }
 

@@ -8,3 +8,7 @@
     padding:30px;
     background-color: #00527A;
 }
+
+.tabs {
+    display: flex;
+}

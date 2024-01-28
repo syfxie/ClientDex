@@ -15,9 +15,6 @@ client = MongoClient(CONNECTION_STRING)
 dbname = client['contacts']
 contacts = dbname['contacts']
 
-contact_fields = ['_id', 'first_name', 'last_name', 'category', 'company', 'position', 'location',
-                  'email', 'phone_number', 'notes', 'meeting_history', 'last_contacted']
-
 
 # Add contact (working)
 @app.route('/add_contact', methods=['POST'])
@@ -26,59 +23,84 @@ def create_contact():
     app.logger.info(data)
     
     try:
-        if len(data['firstName']) > 0 and len(data['lastName']) > 0:
+        if data['firstName'] != "" and data['lastName'] != "":
             contacts.insert_one(data)
         else:
-            return jsonify({'message': 'First and last name are required fields'}), 400
+            return jsonify({'message': 'First and last name are required fields'})
         return jsonify({'message': 'Contact added successfully'}), 201
     except Exception as e:
         return jsonify({'error': str(e)}), 400
 
 
-# Index and filter contacts
+# Index and filter contacts (working)
 @app.route('/', methods=['GET'])
 def list_contacts():
     data = request.get_json()
-    filter_category = data.get('category')
 
-    if filter_category:
-        results = contacts.find({'category': filter_category})
-    else:
-        results = contacts.find()
+    # add to database
 
-    response = {'contacts': results}
-    return jsonify(response), 200
+    response = {'message': 'Contact added successfully'}
+    return jsonify(response), 201
 
 
 # Show contact by ID
-@app.route('/contact/<contact_id>', methods=['GET'])
-def show_contact(contact_id):
+@app.route('/contact', methods=['GET'])
+def show_contact():
+    contact_id = request.args.get('id')
+
     if not (contact_id and len(contact_id) > 0):
         return jsonify({'error': 'Invalid contact ID'}), 400
 
     # retrieve from database
-    contact = contacts.find_one({'_id': contact_id})
+    contact = ['Sophie', 'Xie', ['Blacklisted'], 'Company', 'Toronto', 'sophie@gmail.com',
+               '1234567890', 'notes notes notes', '02-02-2020']
 
     if contact:
-        data = {key: contact.get(key, '') for key in contact_fields}
+        keys = ['first_name', 'last_name', 'labels', 'company', 'location',
+                'email', 'phone_number', 'notes', 'last_contacted']
+        data = dict(zip(keys, contact))
         return jsonify(data), 200
     else:
         return jsonify({'error': 'Contact not found'}), 404
 
 
 # Edit contact
-@app.route('/update/<contact_id>', methods=['PUT', 'PATCH'])
-def update_contact(contact_id):
+@app.route('/update_contact', methods=['PUT'])
+def update_contact():
+    data = request.get_json()
+
+    contact_id = data['id']
+
     if not (contact_id and len(contact_id) > 0):
         return jsonify({'error': 'Invalid contact ID'}), 400
 
-    data = request.get_json(force=True)
-    result = contacts.update_one({'_id': contact_id}, {'$set': data})
+    # edit database
+    contact = ['Sophie', 'Xie', ['Potential Customer'], 'Company', 'Toronto', 'sophie@gmail.com',
+               '1234567890', 'notes notes notes', '02-02-2020']
 
-    if result:
-        return jsonify({'message': 'Contact updated successfully'}), 200
+    if contact:
+        keys = ['first_name', 'last_name', 'labels', 'company', 'location',
+                'email', 'phone_number', 'notes', 'last_contacted']
+        data = dict(zip(keys, contact))
+        return jsonify(data), 200
     else:
         return jsonify({'error': 'Contact not found'}), 404
+    
+# @app.route('/update_contact/add_meeting', methods=['PUT'])
+# def add_meeting():
+#     data = request.get_json()
+#     app.logger.info(data)
+
+#     # fix
+#     try:
+#         filter = {'_id': data['_id']}
+#         newdata = { "$set": { "lastContacted" : datetime.datetime.now(tz=datetime.timezone.utc) } }
+#         contacts.update_one(filter, newdata)
+#         response = {'message': 'Last meeting time updated'}
+#         return jsonify(response), 200
+#     except Exception as e:
+#         response = {'message': e}
+#         return jsonify(response), 400 
 
 
 # Delete contact (working)
@@ -98,33 +120,6 @@ def delete_contact():
             return jsonify({'message': 'Contact not found'}), 404
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-
-
-# Search
-@app.route('/search', methods=['GET'])
-def search_contacts():
-        data = request.get_json()
-        filter = data['category']
-
-        response = {'message': 'Contact added successfully'}
-        return jsonify(response), 200
-
-
-# @app.route('/update_contact/add_meeting', methods=['PUT'])
-# def add_meeting():
-#     data = request.get_json()
-#     app.logger.info(data)
-
-#     # fix
-#     try:
-#         filter = {'_id': data['_id']}
-#         newdata = { "$set": { "lastContacted" : datetime.datetime.now(tz=datetime.timezone.utc) } }
-#         contacts.update_one(filter, newdata)
-#         response = {'message': 'Last meeting time updated'}
-#         return jsonify(response), 200
-#     except Exception as e:
-#         response = {'message': e}
-#         return jsonify(response), 400
 
     
 @app.route('/listen', methods=["POST"])

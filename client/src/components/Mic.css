@@ -1,0 +1,20 @@
+.audio-input {
+    display: flex;
+    align-items: center;
+    margin-left: 2em;
+    gap: 1em;
+    padding: 1.5em;
+}
+
+.audio-recorder {
+    display: flex;
+}
+
+#prompt {
+    display: flex;
+    font-size: 12px;
+    /* margin-top: 40px; */
+    font-size: 1em;
+    color: black;
+    /* margin-bottom: ; */
+}
