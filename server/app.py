@@ -37,6 +37,9 @@ def get_embedding(doc):
     if copy.get("embedding"):
         del copy["embedding"]
 
+    if copy.get("lastContacted"):
+        del copy["lastContacted"]
+
     json_string = json.dumps(copy, default=str)
     print('text to embed: ', json_string)
     return embed_text(json_string, API_KEY)

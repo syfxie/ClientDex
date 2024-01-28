@@ -24,4 +24,3 @@ assemblyai~=0.20.2
 cohere~=4.45
 numpy~=1.26.3
 requests~=2.31.0
-faiss
