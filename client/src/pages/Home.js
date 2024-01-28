@@ -21,7 +21,7 @@ const tempContact = {
 }
 
 export default function Home() {
-    const [contacts, setContacts] = useState([tepContact, tempContact, tempContact, tempContact, tempContact]);
+    const [contacts, setContacts] = useState([tempContact, tempContact, tempContact, tempContact, tempContact]);
     const [category, setCategory] = useState('Contact Soon'); // String containing the category of contacts
     const [prevTallest, setPrevTallest] = useState("first");
 
@@ -39,6 +39,7 @@ export default function Home() {
                 console.log(response);
                 throw new Error('Network response was not ok');
             }
+            console.log(id);
             const responseData = await response.json();
             // const currElement = document.getElementById(id.toString());
             // console.log(currElement.classList);
@@ -54,21 +55,14 @@ export default function Home() {
         }
     }
 
-    let navigate = useNavigate();
-    const toEditPage = () =>{ 
-        let path = `edit-contact`; 
-        navigate(path);
-      }
-
-
     useEffect(() => {
         setContacts(contacts);
     }, [contacts])
 
     return (
         <div className='home'>
-            <Mic></Mic>
             <div className='contents'>
+                <Mic></Mic>
                 <div className='tabs'>
                     <div className='darkTab taller' id="first" onClick={() => changeContacts('Contact Soon', "first")}>Contact Soon</div>
                     <div className='lightTab' id="second" onClick={() => changeContacts('Potential Client', 'second')}>Potential Client</div>

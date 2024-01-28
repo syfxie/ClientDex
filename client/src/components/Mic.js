@@ -29,7 +29,8 @@ const Mic = () => {
   };
 
   return (
-    <div>
+    <div className='audio-input'>
+      <p id="prompt">Ask me to help find a contact!</p>
       <AudioRecorder
         onRecordingComplete={(blob) => addAudioElement(blob)}
         recorderControls={recorderControls}
