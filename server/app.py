@@ -207,10 +207,9 @@ def search_contacts():
         print('Search result id: ', result_id)
 
         if result_id:
-            contact = contacts.find_one({"_id": result_id}, {"embedding": 0})
+            contact = contacts.find_one({"_id": ObjectId(result_id)}, {"embedding": 0})
             if contact:
-                contact['_id'] = str(contact['_id'])
-                return jsonify(contact), 200
+                return jsonify({'contact_id': str(result_id)}), 200
         else:
             return jsonify({'message': 'No result matches your search'}), 404
     except Exception as e:
