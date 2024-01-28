@@ -21,7 +21,7 @@ const tempContact = {
 }
 
 export default function Home() {
-    const [contacts, setContacts] = useState([tepContact, tempContact, tempContact, tempContact, tempContact]);
+    const [contacts, setContacts] = useState([tempContact, tempContact, tempContact, tempContact, tempContact]);
     const [category, setCategory] = useState('Contact Soon'); // String containing the category of contacts
     const [prevTallest, setPrevTallest] = useState("first");
 
