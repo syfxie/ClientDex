@@ -33,7 +33,7 @@ def create_contact():
 
 
 
-# Index and filter contacts
+# Index and filter contacts (working)
 @app.route('/', methods=['GET'])
 def list_contacts():
     category = request.args.get('category')
@@ -43,19 +43,18 @@ def list_contacts():
     #     # get list with three sections, contact today, need to contact in 1 day, need to contact in 2 days
 
     try:
-        # response = contacts.find({"labels": {"$in": [data.category]}})
-        response = contacts.find({"category": category})
+        response = contacts.find({"category": category},{"embedding":0})
         category_contacts = list(response)
         for contact in category_contacts:
             contact['_id'] = str(contact['_id'])
         if len(category_contacts) == 0:
-            return jsonify({'message': 'No contacts in this category'}), 201
+            return jsonify({'message': 'No contacts in this category'}), 200
         else:
             return jsonify(category_contacts), 200
     except Exception as e:
         return jsonify({'error': str(e)}),500
     
-# Show contact by ID (working)
+# Show contact by ID 
 @app.route('/contact', methods=['GET'])
 def show_contact():
     data = request.get_json()
@@ -78,27 +77,24 @@ def show_contact():
     except Exception as e:
         return jsonify({'error': str(e)}), 404
 
-# Edit contact
+# Edit contact (working)
 @app.route('/update_contact', methods=['PUT'])
 def update_contact():
+    id = request.args.get('_id')
     data = request.get_json()
 
-    contact_id = data['id']
-
-    if not (contact_id and len(contact_id) > 0):
+    if not (id and len(id) > 0):
         return jsonify({'error': 'Invalid contact ID'}), 400
+    
+    try:
+        result = contacts.update_one({'_id': ObjectId(id)}, {"$set": data})
+        if result.modified_count > 0:
+            return jsonify({'message': 'Contact updated successfully'}), 200
+        else:
+            return jsonify({'message': 'No contact updates made'}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
 
-    # edit database
-    contact = ['Sophie', 'Xie', ['Potential Customer'], 'Company', 'Toronto', 'sophie@gmail.com',
-               '1234567890', 'notes notes notes', '02-02-2020']
-
-    if contact:
-        keys = ['first_name', 'last_name', 'labels', 'company', 'location',
-                'email', 'phone_number', 'notes', 'last_contacted']
-        data = dict(zip(keys, contact))
-        return jsonify(data), 200
-    else:
-        return jsonify({'error': 'Contact not found'}), 404
     
 @app.route('/update_contact/add_meeting', methods=['PUT'])
 def add_meeting():
@@ -108,7 +104,7 @@ def add_meeting():
     # fix
     try:
         filter = {'_id': data['_id']}
-        newdata = { "$set": { "lastContacted" : datetime.datetime.now(tz=datetime.timezone.utc) } }
+        newdata = { "$set": { "lastContacted" : datetime.now() } }
         contacts.update_one(filter, newdata)
         response = {'message': 'Last meeting time updated'}
         return jsonify(response), 200
