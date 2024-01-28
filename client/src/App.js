@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import AddContact from "./pages/AddContact";
 import EditContact from './pages/EditContact';
 import Landing from './pages/Landing';
+import ContactDetails from './pages/ContactDetails';
 
 function App() {
     return (
@@ -17,6 +18,7 @@ function App() {
                         <Route path="add-contact" element={<AddContact />} />
                         <Route path="/home/edit-contact" element={<EditContact/>} />
                         <Route path="/" element={<Landing />} />
+                        <Route path="/details/:id" element={<ContactDetails/>}/>
                     </Routes>
             </div>
         </div>

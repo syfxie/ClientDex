@@ -15,7 +15,6 @@ function Landing() {
     display: 'block',
     margin: 'auto',
     textAlign: 'center'
-
   }
 
 

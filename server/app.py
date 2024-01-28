@@ -57,16 +57,14 @@ def create_contact():
 
 
 # Index and filter contacts (working)
-@app.route('/', methods=['GET'])
+@app.route('/category', methods=['POST'])
 def list_contacts():
-    category = request.args.get('category')
-
     # if data.labels == "Contact Soon":
     #     # if today's data - (last contacted + contact frequency) < 3
     #     # get list with three sections, contact today, need to contact in 1 day, need to contact in 2 days
-
+    data = (request.get_json())['category']
     try:
-        response = contacts.find({"category": category}, {"embedding": 0})
+        response = contacts.find({"category": data},{"embedding":0})
         category_contacts = list(response)
         for contact in category_contacts:
             contact['_id'] = str(contact['_id'])
@@ -192,6 +190,11 @@ def search_contacts():
 
         prompt = 'I want to talk to software engineers from RBC Canada'
         print(prompt)
+
+        print('here')
+        audio_file = request.files['audio']
+        # Save the audio file to a specific location
+        audio_file.save('./audio.wav')
 
         # get all embeddings from the database
         embedded_vectors = []

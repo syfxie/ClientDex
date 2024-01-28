@@ -11,6 +11,7 @@ const Mic = () => {
   };
 
   const handleSaveAudio = async () => {
+    recorderControls.stopRecording();
     if (audioBlob) {
       const formData = new FormData();
       formData.append('audio', audioBlob, 'audio.webm');
@@ -28,13 +29,13 @@ const Mic = () => {
   };
 
   return (
-    <div className='audio-input'>
-      <p id="prompt">Ask me to help find a contact!</p>
-      <AudioRecorder id='mic-icon'
+    <div>
+      <AudioRecorder
         onRecordingComplete={(blob) => addAudioElement(blob)}
         recorderControls={recorderControls}
       />
-      <button onClick={handleSaveAudio}>Enter</button>
+      <button onClick={recorderControls.stopRecording}>Stop recording</button>
+      <button onClick={handleSaveAudio}>Save Audio</button>
     </div>
   );
 };

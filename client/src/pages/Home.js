@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import ContactCard from "../components/contactCard";
 import ContactCell from "../components/contactCell";
 import { useNavigate } from "react-router-dom";
+import Mic from '../components/Mic';
 
 import './Home.css'
 
@@ -20,34 +21,45 @@ const tempContact = {
 }
 
 export default function Home() {
-    const [contacts, setContacts] = useState([tempContact, tempContact, tempContact, tempContact, tempContact]);
+    const [contacts, setContacts] = useState([tepContact, tempContact, tempContact, tempContact, tempContact]);
     const [category, setCategory] = useState('Contact Soon'); // String containing the category of contacts
     const [prevTallest, setPrevTallest] = useState("first");
 
     const changeContacts = async (c, id) => {
-        setCategory(c);
         try {
-            const response = await fetch('http://localhost:5000/category', {
-                method: 'GET',
-                body: category
+            const response = await fetch(`http://localhost:5000/category`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ category: c }), // Send category as an object with the key 'category'
             });
-            setContacts(response.data);
-            const currElement = document.getElementById(id);
-            currElement.classList.add('taller');
-            const prevElement = document.getElementById(prevTallest);
-            prevElement.classList.remove('taller');
-            setPrevTallest(currElement);
-        } catch {
-            console.log('failed to switch to category ', category);
+
+            if (!response.ok) {
+                console.log(response);
+                throw new Error('Network response was not ok');
+            }
+            const responseData = await response.json();
+            // const currElement = document.getElementById(id.toString());
+            // console.log(currElement.classList);
+            // currElement.classList.add('taller');
+            // const prevElement = document.getElementById(prevTallest);
+            // prevElement.classList.remove('taller');
+            // console.log(prevElement);
+            // setPrevTallest(currElement);
+            setContacts(responseData);
+            setCategory(c);
+        } catch (error) {
+            console.log('failed to switch to category ', category, "because ", error);
         }
     }
 
     let navigate = useNavigate();
-    const routeChange = () =>{ 
+    const toEditPage = () =>{ 
         let path = `edit-contact`; 
         navigate(path);
       }
-    
+
 
     useEffect(() => {
         setContacts(contacts);
@@ -55,20 +67,20 @@ export default function Home() {
 
     return (
         <div className='home'>
+            <Mic></Mic>
             <div className='contents'>
                 <div className='tabs'>
                     <div className='darkTab taller' id="first" onClick={() => changeContacts('Contact Soon', "first")}>Contact Soon</div>
-                    <div className='lightTab' id="second" onClick={() => changeContacts('Potential Customer', 'second')}>Potential Customer</div>
-                    <div className='darkTab' id="third" onClick={() => changeContacts('Cold Calls', 'third')}>Cold Calls</div>
-                    <div className='lightTab' id="fourth" onClick={() => changeContacts('Current Clients', 'fourth')}>Current Clients</div>
-                    <div className='darkTab' id="fifth" onClick={() => changeContacts('VIP Clients', 'fifth')}>VIP Clients</div>
-                    <div className='lightTab' id="sixth" onClick={() => changeContacts('Others', 'sixth')}>Others</div>
-                    <div className='darkTab' id="seventh" onClick={() => changeContacts('Past Clients', 'seventh')}>Past Clients</div>
-                    <div className='lightTab' id="eighth" onClick={() => changeContacts('Blacklist', 'eighth')}>Blacklist</div>
+                    <div className='lightTab' id="second" onClick={() => changeContacts('Potential Client', 'second')}>Potential Client</div>
+                    <div className='darkTab' id="third" onClick={() => changeContacts('Cold Call', 'third')}>Cold Call</div>
+                    <div className='lightTab' id="fourth" onClick={() => changeContacts('Current Client', 'fourth')}>Current Client</div>
+                    <div className='darkTab' id="fifth" onClick={() => changeContacts('Urgent', 'fifth')}>Urgent</div>
+                    <div className='lightTab' id="sixth" onClick={() => changeContacts('Past Client', 'sixth')}>Past Client</div>
+                    <div className='darkTab' id="seventh" onClick={() => changeContacts('Blacklisted', 'seventh')}>Blacklisted</div>
                 </div>
                 <div className="list-container">
                     {contacts.map((aContact) => {
-                        return <ContactCell contact={aContact} onClick={routeChange}/>
+                        return <ContactCell contact={aContact}/>
                     }
                     )}
                 </div>
