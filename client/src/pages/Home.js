@@ -21,7 +21,7 @@ export default function Home() {
     const [contacts, setContacts] = useState([tempContact, tempContact, tempContact, tempContact, tempContact]);
     const [category, setCategory] = useState('Contact Soon'); // String containing the category of contacts
 
-    const changeContacts = async (c) => {
+    const changeContacts = async (c, id) => {
         setCategory(c);
         try {
             const response = await fetch('http://localhost:5000/category', {
@@ -29,6 +29,8 @@ export default function Home() {
                 body: category
             });
             setContacts(response.data);
+            document.getElementById(id);
+            
         } catch {
             console.log('failed to switch to category ', category);
         }
@@ -39,22 +41,24 @@ export default function Home() {
     })
 
     return (
-        <div>
-            <div className='tabs'>
-                <div onClick={() => changeContacts('Contact Soon')}>Contact Soon</div>
-                <div onClick={() => changeContacts('Potential Customer')}>Potential Customer</div>
-                <div onClick={() => changeContacts('Cold Calls')}>Cold Calls</div>
-                <div onClick={() => changeContacts('Current Clients')}>Current Clients</div>
-                <div onClick={() => changeContacts('VIP Clients')}>VIP Clients</div>
-                <div onClick={() => changeContacts('Others')}>Others</div>
-                <div onClick={() => changeContacts('Past Clients')}>Past Clients</div>
-                <div onClick={() => changeContacts('Blacklist')}>Blacklist</div>
-            </div>
-            <div className="list-container">
-                {contacts.map((aContact) => {
-                    return <ContactCell contact={aContact}/>
-                }
-                )}
+        <div className='home'>
+            <div className='contents'>
+                <div className='tabs'>
+                    <div className='darkTab' id="first" onClick={() => changeContacts('Contact Soon', "first")}>Contact Soon</div>
+                    <div className='lightTab' id="second" onClick={() => changeContacts('Potential Customer', 'second')}>Potential Customer</div>
+                    <div className='darkTab' id="third" onClick={() => changeContacts('Cold Calls', 'third')}>Cold Calls</div>
+                    <div className='lightTab' id="fourth" onClick={() => changeContacts('Current Clients', 'fourth')}>Current Clients</div>
+                    <div className='darkTab' id="fifth" onClick={() => changeContacts('VIP Clients', 'fifth')}>VIP Clients</div>
+                    <div className='lightTab' id="sixth" onClick={() => changeContacts('Others', 'sixth')}>Others</div>
+                    <div className='darkTab' id="seventh" onClick={() => changeContacts('Past Clients', 'seventh')}>Past Clients</div>
+                    <div className='lightTab' id="eighth" onClick={() => changeContacts('Blacklist', 'eighth')}>Blacklist</div>
+                </div>
+                <div className="list-container">
+                    {contacts.map((aContact) => {
+                        return <ContactCell contact={aContact}/>
+                    }
+                    )}
+                </div>
             </div>
         </div>
     )

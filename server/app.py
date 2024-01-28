@@ -103,7 +103,7 @@ def add_meeting():
 
     # fix
     try:
-        filter = {'_id': data['_id']}
+        filter = {'_id': ObjectId(data['_id'])}
         newdata = { "$set": { "lastContacted" : datetime.now() } }
         contacts.update_one(filter, newdata)
         response = {'message': 'Last meeting time updated'}
