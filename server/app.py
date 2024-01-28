@@ -15,6 +15,9 @@ client = MongoClient(CONNECTION_STRING)
 dbname = client['contacts']
 contacts = dbname['contacts']
 
+contact_fields = ['_id', 'first_name', 'last_name', 'category', 'company', 'position', 'location',
+                  'email', 'phone_number', 'notes', 'meeting_history', 'last_contacted']
+
 
 # Add contact (working)
 @app.route('/add_contact', methods=['POST'])
@@ -57,9 +60,7 @@ def show_contact(contact_id):
     contact = contacts.find_one({'_id': contact_id})
 
     if contact:
-        _keys = ['first_name', 'last_name', 'labels', 'company', 'location',
-                 'email', 'phone_number', 'notes', 'last_contacted']
-        data = {key: contact.get(key, '') for key in _keys}
+        data = {key: contact.get(key, '') for key in contact_fields}
         return jsonify(data), 200
     else:
         return jsonify({'error': 'Contact not found'}), 404
