@@ -8,8 +8,9 @@ import './contactCell.css'
 
 export default function ContactCell({contact}){
     const navigate = useNavigate();
+    console.log(contact);
     const toDetailPage = () => {
-        let path = `details/${contact.id}`;
+        let path = `/details/${contact._id}`
         navigate(path);
     }
 
@@ -31,12 +32,6 @@ export default function ContactCell({contact}){
                     <p className="text">{contact.phone}</p>
                 </div>
             </div>
-            <button 
-            className="edit-btn"
-            // onClick={toEditPage}
-            >
-                EDIT
-            </button>
             <IconButton className="icon"
                         size="large"
                         onClick={toDetailPage}
