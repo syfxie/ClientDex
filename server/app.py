@@ -81,7 +81,7 @@ def list_contacts():
 
 
 # Show contact by ID (working)
-@app.route('/contact', methods=['GET'])
+@app.route('/details', methods=['GET'])
 def show_contact():
     id = request.args.get('_id')
 
