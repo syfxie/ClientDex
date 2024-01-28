@@ -25,12 +25,14 @@ function ContactDetails() {
 
 
   return (
-    <div>
-      {contact ? (
-        <ContactCard contact={contact} />
-      ) : (
-        <p>Contact not found</p>
-      )}
+    <div className="wrap-container">
+      <div className="inner-content-container">
+        {contact ? (
+            <ContactCard contact={contact} />
+        ) : (
+            <p>Contact not found</p>
+        )}
+      </div>
     </div>
   );
 }
