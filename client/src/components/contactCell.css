@@ -1,6 +1,7 @@
 .outer-container {
     height: 70px;
-    max-width: 900px;
+    padding-left: 10px;
+    max-width: 1200px;
     background-color: white;
     border: #888888 2px solid;
     display: flex;
@@ -10,7 +11,7 @@
 }
 
 .inner-container {
-    max-width:600px;
+    max-width:800px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -20,15 +21,17 @@
     flex: 2;
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: start;
     justify-content: center;
     gap: 5px;
+    margin-right: 20px;
 }
 
 .personal-info {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
+    align-items: flex-start;
     margin-left: 10px;
 }
 
@@ -38,7 +41,8 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 0 10px 0 10px;
+    padding: 0 20px 0 20px;
+    gap:30px;
 }
 
 .icon {

@@ -5,6 +5,7 @@ import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOu
 import { useNavigate } from 'react-router-dom';
 
 import './contactCell.css'
+import Button from "./button";
 
 export default function ContactCell({contact}){
     const navigate = useNavigate();
@@ -31,12 +32,8 @@ export default function ContactCell({contact}){
                     <p className="text">{contact.phone}</p>
                 </div>
             </div>
-            <button 
-            className="edit-btn"
-            // onClick={toEditPage}
-            >
-                EDIT
-            </button>
+
+            <Button text={"EDIT"} fontSize={14}/>
             <IconButton className="icon"
                         size="large"
                         onClick={toDetailPage}

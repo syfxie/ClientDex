@@ -44,7 +44,8 @@ export default function ContactCard({contact}){
                                     background={'#FBF56B'}
                                     padding={'3px'}
                                     margin={'3px'}
-                                    border={'#FBF3F3 2px solid'} disabled={true}/>
+                                    border={'#FBF3F3 2px solid'}
+                                    disabled={true}/>
                         );
                     })}
                 </div>

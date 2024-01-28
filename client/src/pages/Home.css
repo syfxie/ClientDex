@@ -1,15 +1,21 @@
+.home {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .contents {
     margin: auto;
-    width: 90%;
     padding-top: 2em;
-    margin-left: 10em;
     margin-top: 3em;
+    width: 70%;
 }
 
 .list-container {
     height: 80%;
     overflow: auto;
-    max-width: 913px;
+    max-width: 1200px;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -22,20 +28,22 @@
 }
 
 .taller {
-    margin-top: -1.5em;
+    margin-top: -1em;
     background-color: inherit;
 }
 
 .darkTab {
     background-color: #00527A;
-    padding: 5px;
+    padding: 5px 20px 5px 20px;
     color: antiquewhite;
+    font-size: 14px;
 }
 
 .lightTab {
     background-color: antiquewhite;
     padding: 5px;
     color: #00527A;
+    font-size: 14px;
 }
 
 

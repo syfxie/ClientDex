@@ -36,7 +36,8 @@
   background-color: #00527A;
   width: 1200px;
   height: 520px;
-  border-radius: 25px;
+  border-radius: 5px;
+  padding: 10px;
 }
 
 form {
