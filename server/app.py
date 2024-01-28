@@ -12,7 +12,11 @@ import numpy as np
 from semantic_search.embed_and_search import embed_text, search
 
 app = Flask(__name__)
+
 CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
+
+cors = CORS(app, resources={r"/foo": {"origins": "http://localhost:5000"}})
 
 CONNECTION_STRING = "mongodb+srv://uoft:oPqKe1qnlgxLVJQF@cluster0.fjluu9a.mongodb.net/?retryWrites=true&w=majority"
 client = MongoClient(CONNECTION_STRING)
@@ -173,7 +177,7 @@ def delete_contact():
 #         return jsonify({'error': f'Failed to save audio: {str(e)}'}), 500
 
 
-@app.route('/search', methods=["GET"])
+@app.route('/search', methods=["POST"])
 def search_contacts():
     try:
         # audio_file = request.files.get('audio')
