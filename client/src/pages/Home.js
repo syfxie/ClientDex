@@ -20,20 +20,19 @@ const tempContact = {
 }
 
 export default function Home() {
-    const [contacts, setContacts] = useState([tempContact, tempContact, tempContact, tempContact, tempContact]);
+    const [contacts, setContacts] = useState([]);
     const [category, setCategory] = useState('Contact Soon'); // String containing the category of contacts
-    const [prevTallest, setPrevTallest] = useState("first");
 
     const changeContacts = async (c, id) => {
         try {
-            const response = await fetch(`http://localhost:5000/category`, {
+            const response = await fetch(`http://127.0.0.1:5000/category`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ category: c }), // Send category as an object with the key 'category'
             });
-
+            console.log("hi")
             if (!response.ok) {
                 console.log(response);
                 throw new Error('Network response was not ok');

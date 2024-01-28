@@ -48,6 +48,8 @@ def create_contact():
     data = request.get_json()
     app.logger.info(data)
 
+    data['lastContacted'] = datetime(2000, 1, 1)
+
     try:
         if data['firstName'] != "" and data['lastName'] != "":
             data['embedding'] = get_embedding(data)
@@ -81,7 +83,7 @@ def list_contacts():
 
 
 # Show contact by ID (working)
-@app.route('/contact', methods=['GET'])
+@app.route('/details', methods=['GET'])
 def show_contact():
     id = request.args.get('_id')
 
@@ -138,6 +140,21 @@ def add_meeting():
     except Exception as e:
         response = {'message': e}
         return jsonify(response), 400
+    
+@app.route('/contact_soon', methods=['GET'])
+def contact_soon():
+    try:
+        response = contacts.find({} , { "embedding" : 0 })
+        contact_list = list(response)
+        filtered_contacts = list(filter(lambda contact: ((datetime.now() - contact['lastContacted']) < timedelta(days=3)), contact_list))
+        for contact in filtered_contacts:
+            contact['_id'] = str(contact['_id'])
+        if len(filtered_contacts) == 0:
+            return jsonify({'message': 'No contacts need to be contacted soon'}), 200
+        else:
+            return jsonify(filtered_contacts), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}),500
 
 
 # Delete contact (working)
