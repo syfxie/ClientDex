@@ -33,13 +33,20 @@ def search(prompt, embedded_texts, api_key, model_name="embed-english-v3.0", inp
 
     max_similarity = 0
     max_embedding = None
+    count = 0
 
     for embedding in embedded_texts:
-        similarity = np.dot(embedding["embedding"], prompt_array.T)  # minimizing dot product to minimize distance
-        print(similarity)
+        print(count)
 
-        if similarity > max_similarity:
-            max_similarity = similarity
+        if count >= 36:
+            print(count, ': ', embedding)
+        
+        count += 1
+        similarity = np.dot(embedding["embedding"], prompt_array.T)  # minimizing dot product to minimize distance
+        print(similarity[0])
+
+        if similarity[0] > max_similarity:
+            max_similarity = similarity[0]
             max_embedding = embedding
 
     print('Search results: max similarity is ', max_similarity)

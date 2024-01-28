@@ -38,6 +38,14 @@ export default function Home() {
                 throw new Error('Network response was not ok');
             }
             const responseData = await response.json();
+            // const currElement = document.getElementById(id.toString());
+            // console.log(currElement.classList);
+            // currElement.classList.add('taller');
+            // const prevElement = document.getElementById(prevTallest);
+            // prevElement.classList.remove('taller');
+            // console.log(prevElement);
+            // setPrevTallest(currElement);
+            console.log(responseData);
             setContacts(responseData);
             setCategory(c);
         } catch (error) {
@@ -45,20 +53,12 @@ export default function Home() {
         }
     }
 
-    let navigate = useNavigate();
-    const toEditPage = () =>{ 
-        let path = `edit-contact`; 
-        navigate(path);
-      }
-
-
     useEffect(() => {
         setContacts(contacts);
     }, [contacts])
 
     return (
         <div className='home'>
-            <Mic></Mic>
             <div className='contents'>
                 <div className='tabs'>
                     <div className='darkTab taller' id="first" onClick={() => changeContacts('Contact Soon', "first")}>Contact Soon</div>

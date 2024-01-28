@@ -48,6 +48,8 @@ def create_contact():
     data = request.get_json()
     app.logger.info(data)
 
+    data['lastContacted'] = datetime(2000, 1, 1)
+
     try:
         if data['firstName'] != "" and data['lastName'] != "":
             data['embedding'] = get_embedding(data)
@@ -138,6 +140,21 @@ def add_meeting():
     except Exception as e:
         response = {'message': e}
         return jsonify(response), 400
+    
+@app.route('/contact_soon', methods=['GET'])
+def contact_soon():
+    try:
+        response = contacts.find({} , { "embedding" : 0 })
+        contact_list = list(response)
+        filtered_contacts = list(filter(lambda contact: ((datetime.now() - contact['lastContacted']) < timedelta(days=3)), contact_list))
+        for contact in filtered_contacts:
+            contact['_id'] = str(contact['_id'])
+        if len(filtered_contacts) == 0:
+            return jsonify({'message': 'No contacts need to be contacted soon'}), 200
+        else:
+            return jsonify(filtered_contacts), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}),500
 
 
 # Delete contact (working)
@@ -180,31 +197,27 @@ def delete_contact():
 @app.route('/search', methods=["POST"])
 def search_contacts():
     try:
-        # audio_file = request.files.get('audio')
-        #
-        # # Save the audio file to a specific location
-        # audio_file.save('./audio.wav')
-        #
-        # aai.settings.api_key = keys.assembly_key
-        # transcriber = aai.Transcriber()
-        #
-        # transcript = transcriber.transcribe("./audio.wav")
-        #
-        # prompt = transcript.text
+        audio_file = request.files.get('audio')
+
+        # Save the audio file to a specific location
+        audio_file.save('./audio.wav')
+
+        aai.settings.api_key = keys.assembly_key
+        transcriber = aai.Transcriber()
+
+        transcript = transcriber.transcribe("./audio.wav")
+
+        prompt = transcript.text
 
         prompt = 'I want to talk to software engineers from RBC Canada'
         print(prompt)
-
-        print('here')
-        audio_file = request.files['audio']
-        # Save the audio file to a specific location
-        audio_file.save('./audio.wav')
 
         # get all embeddings from the database
         embedded_vectors = []
 
         for document in contacts.find():
-            embedded_vectors.append(np.array(document['embedding']))
+            if document.get('embedding'):
+                embedded_vectors.append({'id': document['_id'], 'embedding': np.array(document['embedding'])})
         print(f'Processed {len(embedded_vectors)} documents')
 
         result_id = search(prompt, embedded_vectors, API_KEY)
